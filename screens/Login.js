@@ -27,6 +27,7 @@ const login = () => {
 }
 
 
+
 class Login extends Component {
     constructor(props) {
         super(props);
@@ -44,6 +45,9 @@ class Login extends Component {
         this.setState({password: pass})
     }
 
+    signUp = () => {
+        this.props.navigation.navigate("SignUp");
+    }
     render() {
         return (
             <View>
@@ -51,6 +55,7 @@ class Login extends Component {
                 <TextInput placeholder="Email" onChangeText={this.handleEmailInput} value={this.state.email}/>
                 <TextInput placeholder="Password" onChangeText={this.handlePasswordInput} value={this.state.password} secureTextEntry={true}/>
                 <Button title="Login" onPress={() => this.login()}/>
+                <Button title="Sign Up" onPress={() => this.signUp()}/>
             </View>
         );
     }

@@ -62,6 +62,7 @@ class SignUp extends Component {
                 <TextInput placeholder='Email' onChangeText={this.handleEmailInput} value={this.state.email}/>
                 <TextInput placeholder='Password' onChangeText={this.handlePasswordInput} value={this.state.password} secureTextEntry={true}/>
                 <Button title="Sign Up" onPress={() => this.signUp()}/>
+                <Button title="Login" onPress={() => this.props.navigation.navigate("Login")}/>
             </View>
         );
 
