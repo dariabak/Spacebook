@@ -1,6 +1,9 @@
 import React, { Component } from "react";
-import { View, Text } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Topbar from "../components/Topbar";
+import Constants from 'expo-constants';
+
 
 
 const getData = async(done) => {
@@ -63,7 +66,10 @@ class Profile extends Component {
         );
         } else {
             return (
-                <View>
+                <View style={styles.container}>
+                    <View style={styles.statusBar}>
+                        <Topbar/>
+                    </View>
                     <Text>First name: {this.state.user_data.first_name} </Text>
                     <Text>Last name: {this.state.user_data.last_name}</Text>
                     <Text>Friends: {this.state.user_data.friend_count}</Text>
@@ -72,4 +78,14 @@ class Profile extends Component {
         }
     }
 }
+
+const styles = StyleSheet.create({
+    statusBar: {
+      backgroundColor: '#C2185B',
+      height: Constants.statusBarHeight
+    },
+    container: {
+      flex: 1
+    }
+  });
 export default Profile;

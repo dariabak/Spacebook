@@ -1,8 +1,9 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Button, TextInput } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import React, { Component } from 'react';
+import React, { Component, useContext } from 'react';
 import App from '../App';
+import { loginContext } from '../loginContext';
 
 
 const storeData = async (value) => {
@@ -18,16 +19,25 @@ const clearAsyncStorage = async() => {
     AsyncStorage.clear();
 }
 
+
 class Login extends Component {
+    static contextType = loginContext;
     constructor(props) {
         super(props);
         this.state = {
             email: '',
             password:'',
-            isLoggedIn: false
+            isLoggedIn: this.context
         }
+        
+        
     }
 
+    componentDidMount()
+    {
+    console.log(this.context);
+    console.log(this.context.isLoggedIn);
+    }    
     handleEmailInput = (email) => {
         this.setState({email: email})
     }
@@ -37,6 +47,7 @@ class Login extends Component {
     }
 
     signUp = () => {
+        
         this.props.navigation.navigate("SignUp");
     }
     login = () => {
@@ -55,7 +66,7 @@ class Login extends Component {
             console.log(json);
             this.state.isLoggedIn = true;
             storeData(json);
-            this.props.navigation.navigate("Home");
+            this.context.setAuth(true);
             })
         .catch((error) => {
             clearAsyncStorage();
