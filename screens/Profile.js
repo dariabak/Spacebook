@@ -29,7 +29,7 @@ class Profile extends Component {
     }
 
     getUserDetails = () => {
-        fetch('http://localhost:3333/api/1.0.0/user/'  + this.state.login_data.id, {
+        fetch('http://10.0.2.2:3333/api/1.0.0/user/'  + this.state.login_data.id, {
             headers: {
                 'Content-Type': 'application/json',
                 'X-Authorization': this.state.login_data.token
@@ -67,9 +67,6 @@ class Profile extends Component {
         } else {
             return (
                 <View style={styles.container}>
-                    <View style={styles.statusBar}>
-                        <Topbar/>
-                    </View>
                     <Text>First name: {this.state.user_data.first_name} </Text>
                     <Text>Last name: {this.state.user_data.last_name}</Text>
                     <Text>Friends: {this.state.user_data.friend_count}</Text>

@@ -6,8 +6,9 @@ import Login from './screens/Login';
 import SignUp from './screens/SignUp';
 import HomePage from './screens/HomePage';
 import Home from './screens/Home';
+import HomeNavigator from './HomeNavigator';
 import { loginContext } from './loginContext';
-import Main from './Main';
+
 
 const Stack = createNativeStackNavigator();
 
@@ -39,10 +40,14 @@ class App extends Component {
           <Stack.Navigator>      
             
           { this.state.isLoggedIn ? (
-          <><Stack.Screen name="Home" component={HomePage}/></>) 
+          <><Stack.Screen name="Home" component={HomeNavigator} options={{headerShown: false}}/></>) 
           : (
           <>
-          <Stack.Screen name="Login" component={Login}/>   
+          <Stack.Screen name="Login" component={Login} options={{ 
+            headerRight: () => (
+              <Button title='Click it'></Button>
+            )
+          }}/>   
           <Stack.Screen name="SignUp" component={SignUp}/>   
           </>)      
           }

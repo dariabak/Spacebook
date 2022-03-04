@@ -1,9 +1,9 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Button, TextInput } from 'react-native';
+
+import { StyleSheet, Text, View, Button, TextInput, StatusBar, SafeAreaView } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { Component, useContext } from 'react';
-import App from '../App';
 import { loginContext } from '../loginContext';
+import Topbar from '../components/Topbar';
 
 
 const storeData = async (value) => {
@@ -25,8 +25,8 @@ class Login extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            email: '',
-            password:''
+            email: 'daria@gmail.com',
+            password:'123456'
         }
         
         
@@ -49,7 +49,7 @@ class Login extends Component {
         this.props.navigation.navigate("SignUp");
     }
     login = () => {
-        fetch( 'http://localhost:3333/api/1.0.0/login', {
+        fetch( 'http://10.0.2.2:3333/api/1.0.0/login/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -74,16 +74,18 @@ class Login extends Component {
 
     render() {
         return (
+            <SafeAreaView>
             <View>
                 <Text>Login</Text>
                 <TextInput placeholder="Email" onChangeText={this.handleEmailInput} value={this.state.email}/>
                 <TextInput placeholder="Password" onChangeText={this.handlePasswordInput} value={this.state.password} secureTextEntry={true}/>
                 <Button title="Login" onPress={() => this.login()}/>
                 <Button title="Sign Up" onPress={() => this.signUp()}/>
-                <Text>Test</Text>
             </View>
+            </SafeAreaView>  
         );
     }
 
 }
+
 export default Login;

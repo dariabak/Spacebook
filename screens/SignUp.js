@@ -28,7 +28,7 @@ class SignUp extends Component {
         alert(text);
     }
     signUp = () => {
-        fetch('http://localhost:3333/api/1.0.0/user', {
+        fetch('http://10.0.2.2:3333/api/1.0.0/user', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -63,6 +63,7 @@ class SignUp extends Component {
                 <TextInput placeholder='Password' onChangeText={this.handlePasswordInput} value={this.state.password} secureTextEntry={true}/>
                 <Button title="Sign Up" onPress={() => this.signUp()}/>
                 <Button title="Login" onPress={() => this.props.navigation.navigate("Login")}/>
+           
             </View>
         );
 

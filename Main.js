@@ -5,19 +5,7 @@ import Home from './screens/Home';
 import SignUp from './screens/SignUp';
 
 function Main(props) {
-  return (
-
-    <loginContext.Consumer>
-      {
-      ({isLoggedIn, setAuth}) => 
-          
-         <Login isLoggedIn={isLoggedIn} setAuth={setAuth}/>
-        
-      
-      }
-    </loginContext.Consumer>
-
-  );
+  
 }
 
 export default Main;

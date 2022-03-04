@@ -15,6 +15,9 @@ const getData = async (done) => {
         console.log(e);
     }
 }
+const clearAsyncStorage = async() => {
+    AsyncStorage.clear();
+}
 
 class HomePage extends Component {
     static contextType = loginContext;
@@ -35,7 +38,7 @@ componentDidMount() {
 }
 
 logout = () => {
-    fetch('http://localhost:3333/api/1.0.0/logout', {
+    fetch('http://10.0.2.2:3333/api/1.0.0/logout', {
         method: 'POST',    
         headers: {
                 'Content-Type': 'application/json',
@@ -43,6 +46,7 @@ logout = () => {
             }
         })
         .then(() => {
+            clearAsyncStorage();
             this.context.setAuth(false);
         })
         .catch((error) => {
@@ -53,7 +57,6 @@ render() {
     
         return (
         <View>
-            <Topbar/>
             <Button title='Logout' onPress={() => this.logout()}/>
         </View>
         );
