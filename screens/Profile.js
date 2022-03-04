@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, Image} from "react-native";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import Constants from 'expo-constants';
-
+import * as FileSystem from 'expo-file-system';
 
 
 const getData = async(done) => {
@@ -52,26 +52,33 @@ class Profile extends Component {
         })
     }
     getUserPhoto = () => {
-        
-        fetch('http://10.0.2.2:3333/api/1.0.0/user/' + this.state.login_data.id + '/photo', {
-            method: 'GET',
-            headers: {
-                'X-Authorization': this.state.login_data.token
-            }
-        })
-        .then((response) => {
-            console.log(this.state.login_data.id);
-            return response.blob();
+        FileSystem.downloadAsync(
+            'http://10.0.2.2:3333/api/1.0.0/user/' + this.state.login_data.id + '/photo',
+            FileSystem.documentDirectory + 'profilePicture',
+            {headers: {"X-Authorization": this.state.login_data.token}})
+            .then(({uri}) => {
+                this.setState({user_photo: uri})
+            })
+          
+        // fetch('http://10.0.2.2:3333/api/1.0.0/user/' + this.state.login_data.id + '/photo', {
+        //     method: 'GET',
+        //     headers: {
+        //         'X-Authorization': this.state.login_data.token
+        //     }
+        // })
+        // .then((response) => {
+        //     console.log(this.state.login_data.id);
+        //     return response.blob();
             
-        })
-        .then((resBlob) => {
-            let imageUri = "data:image/png;base64," + resBlob;
-            this.setState({user_photo: imageUri});
+        // })
+        // .then((resBlob) => {
+        //     let imageUri = "data:image/png;base64," + resBlob;
+        //     this.setState({user_photo: imageUri});
 
-        })
-        .catch((error) => {
-            console.log(error);
-        })
+        // })
+        // .catch((error) => {
+        //     console.log(error);
+        // })
     }
     componentDidMount() {
         getData((data) => {
