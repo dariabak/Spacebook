@@ -1,7 +1,6 @@
 import { StyleSheet, Text, View, Button, TextInput, ColorPropType } from 'react-native';
 import React, { Component } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import Home from './Home';
 import Profile from './Profile';
 import Topbar from '../components/Topbar';
 import { loginContext } from '../loginContext';
@@ -54,13 +53,20 @@ logout = () => {
         })
 }
 render() {
-    
+    if(this.state.isLoading) {
+        return (
+            <View>
+                <Text>Loading...</Text>
+            </View>
+        );
+    } else {
         return (
         <View>
+
             <Button title='Logout' onPress={() => this.logout()}/>
         </View>
         );
-
+        }
 }
 }
 export default HomePage;

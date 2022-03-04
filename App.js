@@ -4,8 +4,6 @@ import { NavigationContainer} from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Login from './screens/Login';
 import SignUp from './screens/SignUp';
-import HomePage from './screens/HomePage';
-import Home from './screens/Home';
 import HomeNavigator from './HomeNavigator';
 import { loginContext } from './loginContext';
 
@@ -40,7 +38,7 @@ class App extends Component {
           <Stack.Navigator>      
             
           { this.state.isLoggedIn ? (
-          <><Stack.Screen name="Home" component={HomeNavigator} options={{headerShown: false}}/></>) 
+          <><Stack.Screen name="HomeNavigator" component={HomeNavigator} options={{headerShown: false}}/></>) 
           : (
           <>
           <Stack.Screen name="Login" component={Login} options={{ 
