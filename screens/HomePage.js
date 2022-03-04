@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Home from './Home';
 import Profile from './Profile';
+import Topbar from '../components/Topbar';
+import { loginContext } from '../loginContext';
 
 const getData = async (done) => {
     try {
@@ -15,6 +17,7 @@ const getData = async (done) => {
 }
 
 class HomePage extends Component {
+    static contextType = loginContext;
 constructor(props) {
     super(props);
     this.state = {
@@ -23,12 +26,12 @@ constructor(props) {
     }
 }
 componentDidMount() {
-    // getData((data) => {
-    //     this.setState({
-    //         login_data: data,
-    //         isLoading: false
-    //     });
-    // });
+    getData((data) => {
+        this.setState({
+            login_data: data,
+            isLoading: false
+        });
+    });
 }
 
 logout = () => {
@@ -39,10 +42,8 @@ logout = () => {
                 'X-Authorization': this.state.login_data.token
             }
         })
-        .then((response) => response.json())
-        .then((json) => {
-            console.log(json);
-
+        .then(() => {
+            this.context.setAuth(false);
         })
         .catch((error) => {
             console.log(error);
@@ -52,8 +53,8 @@ render() {
     
         return (
         <View>
-            <Profile/>
-            <Button title='Logout'/>
+            <Topbar/>
+            <Button title='Logout' onPress={() => this.logout()}/>
         </View>
         );
 

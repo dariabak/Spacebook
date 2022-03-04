@@ -26,8 +26,7 @@ class Login extends Component {
         super(props);
         this.state = {
             email: '',
-            password:'',
-            isLoggedIn: this.context
+            password:''
         }
         
         
@@ -35,8 +34,7 @@ class Login extends Component {
 
     componentDidMount()
     {
-    console.log(this.context);
-    console.log(this.context.isLoggedIn);
+   
     }    
     handleEmailInput = (email) => {
         this.setState({email: email})
