@@ -5,6 +5,7 @@ import {loginContext} from './loginContext';
 import Profile from './screens/Profile';
 import HomePage from './screens/HomePage';
 import { SearchBar } from 'react-native-elements';
+import FriendRequests from './screens/FriendRequests';
 
 const Tab = createBottomTabNavigator();
 // const Drawer = createDrawerNavigator();
@@ -14,7 +15,7 @@ function HomeNavigator(props) {
     <Tab.Navigator>
         <Tab.Screen name="Home" component={HomePage} />
         <Tab.Screen name="Profile" component={Profile} />
-        
+        <Tab.Screen name="Friend Requests" component={FriendRequests} />
     </Tab.Navigator>
   );
 }
