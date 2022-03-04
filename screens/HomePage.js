@@ -4,6 +4,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Profile from './Profile';
 import Topbar from '../components/Topbar';
 import { loginContext } from '../loginContext';
+import { SearchBar } from 'react-native-elements';
+import NewPost from '../components/NewPost';
 
 const getData = async (done) => {
     try {
@@ -24,7 +26,8 @@ constructor(props) {
     super(props);
     this.state = {
         login_data: {},
-        isLoading: true
+        isLoading: true,
+        search: ''
     }
 }
 componentDidMount() {
@@ -52,6 +55,9 @@ logout = () => {
             console.log(error);
         })
 }
+updateSearch = (value) => {
+ this.setState({search: value});
+}
 render() {
     if(this.state.isLoading) {
         return (
@@ -62,7 +68,13 @@ render() {
     } else {
         return (
         <View>
-
+            <SearchBar
+                lightTheme
+                placeholder="Type Here..."
+                onChangeText={this.updateSearch}
+                value={this.state.search}
+            />
+            <NewPost/>
             <Button title='Logout' onPress={() => this.logout()}/>
         </View>
         );

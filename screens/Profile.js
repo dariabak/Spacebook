@@ -1,9 +1,10 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet, Image} from "react-native";
+import { View, Text, StyleSheet, Image, ScrollView, Button} from "react-native";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import Constants from 'expo-constants';
 import * as FileSystem from 'expo-file-system';
+
 
 
 const getData = async(done) => {
@@ -60,25 +61,6 @@ class Profile extends Component {
                 this.setState({user_photo: uri})
             })
           
-        // fetch('http://10.0.2.2:3333/api/1.0.0/user/' + this.state.login_data.id + '/photo', {
-        //     method: 'GET',
-        //     headers: {
-        //         'X-Authorization': this.state.login_data.token
-        //     }
-        // })
-        // .then((response) => {
-        //     console.log(this.state.login_data.id);
-        //     return response.blob();
-            
-        // })
-        // .then((resBlob) => {
-        //     let imageUri = "data:image/png;base64," + resBlob;
-        //     this.setState({user_photo: imageUri});
-
-        // })
-        // .catch((error) => {
-        //     console.log(error);
-        // })
     }
     componentDidMount() {
         getData((data) => {
@@ -100,21 +82,23 @@ class Profile extends Component {
         );
         } else {
             return (
-                <View style={styles.container}>
+                <ScrollView style={styles.container}>
                       <Image
                         source={{
                         uri: this.state.user_photo,
                         }}
                         style={{
                         width: 400,
-                        height: 400,
+                        height: 300,
                         borderWidth: 5 
                         }}
                     />
-                    <Text>First name: {this.state.user_data.first_name} </Text>
+                    <Text style={styles.userName}>First name: {this.state.user_data.first_name} </Text>
                     <Text>Last name: {this.state.user_data.last_name}</Text>
                     <Text>Friends: {this.state.user_data.friend_count}</Text>
-                </View>
+                    <Button title='Edit profile'/>
+                    
+                </ScrollView>
             );
         }
     }
@@ -127,6 +111,12 @@ const styles = StyleSheet.create({
     },
     container: {
       flex: 1
-    }
+    },
+    userName: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        marginTop: 10,
+        marginBottom: 10,
+      },
   });
 export default Profile;

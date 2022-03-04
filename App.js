@@ -6,6 +6,7 @@ import Login from './screens/Login';
 import SignUp from './screens/SignUp';
 import HomeNavigator from './HomeNavigator';
 import { loginContext } from './loginContext';
+import { SearchBar } from 'react-native-elements';
 
 
 const Stack = createNativeStackNavigator();
@@ -38,7 +39,11 @@ class App extends Component {
           <Stack.Navigator>      
             
           { this.state.isLoggedIn ? (
-          <><Stack.Screen name="HomeNavigator" component={HomeNavigator} options={{headerShown: false}}/></>) 
+          <><Stack.Screen name="HomeNavigator" component={HomeNavigator} 
+            options={{
+              headerShown: false,
+            }}
+              /></>) 
           : (
           <>
           <Stack.Screen name="Login" component={Login} options={{ 
