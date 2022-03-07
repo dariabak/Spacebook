@@ -23,8 +23,6 @@ class App extends Component {
   }
   setAuth = (value) =>{
     this.setState({isLoggedIn: value});
-    console.log("Yeeey");
-    console.log(this.state.isLoggedIn);
   }
 
   render() {

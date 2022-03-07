@@ -6,6 +6,7 @@ import Topbar from '../components/Topbar';
 import { loginContext } from '../loginContext';
 import { SearchBar } from 'react-native-elements';
 import NewPost from '../components/NewPost';
+import PostsFeed from '../components/PostsFeed';
 
 const getData = async (done) => {
     try {
@@ -28,6 +29,7 @@ constructor(props) {
         login_data: {},
         isLoading: true,
         search: ''
+        
     }
 }
 componentDidMount() {
@@ -36,8 +38,10 @@ componentDidMount() {
             login_data: data,
             isLoading: false
         });
+    
     });
 }
+
 
 logout = () => {
     fetch('http://10.0.2.2:3333/api/1.0.0/logout', {
@@ -75,6 +79,7 @@ render() {
                 value={this.state.search}
             />
             <NewPost/>
+            <PostsFeed/>
             <Button title='Logout' onPress={() => this.logout()}/>
         </View>
         );
