@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View, Button, TextInput, ColorPropType } from 'react-native';
 import React, { Component } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { HomeContext } from '../HomeContext';
 
 const getData = async (done) => {
     try {
@@ -13,6 +14,7 @@ const getData = async (done) => {
 }
 
 class NewPost extends Component {
+    static contextType = HomeContext;
     constructor(props) {
         super(props);
         this.state = {
@@ -34,6 +36,7 @@ addNewPost = () => {
         .then((response) => response.json())
         .then((json) => {
             console.log(json);
+            this.context.addedNewPost();
         })
         .catch((error) => {
             console.log(error);
@@ -52,6 +55,7 @@ handlePostInput = (value) => {
     this.setState({post: value});
 }
 render() {
+  
     return(
         <View style={{padding: 20}}>
             <Text style={{padding: 10}}>Add new post!</Text>
