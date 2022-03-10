@@ -9,7 +9,6 @@ class HomeConsumer extends Component {
     return(
         <HomeContext.Consumer>
             { value => {
-               
                return(
                 <View>
                     <NewPost value={value}/>

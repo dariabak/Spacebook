@@ -46,8 +46,6 @@ class PostsFeed extends Component {
     // }
     componentDidMount() {
         getData((data) => {
-            console.log("ComponentDidMount");
-            console.log(this.context.listOfPosts);
             this.setState({
                 login_data: data,
                 listOfPosts: this.context.listOfPosts,
@@ -57,8 +55,7 @@ class PostsFeed extends Component {
     }
 
     render() {
-        console.log("Render");
-       console.log(this.context.listOfPosts);
+
        if(this.state.isLoading){
             return (<View><Text>Loading...</Text></View>);
        }else{

@@ -58,6 +58,7 @@ getUserPosts = () => {
         })
         .then((response) => response.json())
         .then((json) => {
+            console.log(json);
             this.setState({posts: json, isLoading: false}); 
         })
         .catch((error) => {
@@ -101,7 +102,7 @@ render() {
     } else {
         return (
             
-        <View>
+        <ScrollView>
             <SearchBar
                 lightTheme
                 placeholder="Type Here..."
@@ -112,7 +113,7 @@ render() {
               <HomeConsumer/>
               </HomeContext.Provider>
             <Button title='Logout' onPress={() => this.logout()}/>
-        </View>
+        </ScrollView>
         
         );
         }
