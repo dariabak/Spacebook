@@ -7,7 +7,7 @@ class FriendRequest extends Component {
         fetch('http://10.0.2.2:3333/api/1.0.0/friendrequests/' + this.props.request.user_id , {
         method: 'POST',    
         headers: {
-                'X-Authorization': this.state.login_data.token
+                'X-Authorization': this.props.login_data.token
             }
         })
         .then((response) => console.log(response.status))
@@ -20,7 +20,7 @@ class FriendRequest extends Component {
         fetch('http://10.0.2.2:3333/api/1.0.0/friendrequests/' + this.props.request.user_id , {
         method: 'DELETE',    
         headers: {
-                'X-Authorization': this.state.login_data.token
+                'X-Authorization': this.props.login_data.token
             }
         })
         .then((response) => console.log(response.status))

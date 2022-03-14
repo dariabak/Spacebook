@@ -7,6 +7,7 @@ import SignUp from './screens/SignUp';
 import HomeNavigator from './HomeNavigator';
 import { loginContext } from './loginContext';
 import { SearchBar } from 'react-native-elements';
+import Friends from './screens/Friends';
 
 
 const Stack = createNativeStackNavigator();
@@ -41,7 +42,8 @@ class App extends Component {
             options={{
               headerShown: false,
             }}
-              /></>) 
+              />
+              <Stack.Screen name='Friends' component={Friends}/></>) 
           : (
           <>
           <Stack.Screen name="Login" component={Login} options={{ 

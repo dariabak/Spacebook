@@ -124,7 +124,7 @@ searchFriends = () => {
              value={this.state.search}
            />
            {this.state.friendRequests.map(request => 
-                    <FriendRequest key={request.user_id} request={request}/>
+                    <FriendRequest key={request.user_id} login_data={this.state.login_data} request={request}/>
                  )}
                 <FlatList data={this.state.search_data}
             renderItem={({item}) => (
