@@ -1,14 +1,15 @@
-import { StyleSheet, Text, View, Button, TextInput, ColorPropType, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, Button, TextInput, ColorPropType, ScrollView, FlatList, ActivityIndicator } from 'react-native';
 import React, { Component } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Profile from './Profile';
 import Topbar from '../components/Topbar';
 import { loginContext } from '../loginContext';
 import { HomeContext} from '../HomeContext';
-import { SearchBar } from 'react-native-elements';
+import { SearchBar, ListItem } from 'react-native-elements';
 import NewPost from '../components/NewPost';
 import PostsFeed from '../components/PostsFeed';
 import HomeConsumer from '../HomeConsumer';
+import Search from '../components/Search';
 
 const getData = async (done) => {
     try {
@@ -30,9 +31,9 @@ constructor(props) {
     this.state = {
         login_data: {},
         isLoading: true,
-        search: '',
         addedNewPost: this.addedNewPost,
-        posts: []
+        posts: [],
+        
         
     }
 }
@@ -58,7 +59,6 @@ getUserPosts = () => {
         })
         .then((response) => response.json())
         .then((json) => {
-            console.log(json);
             this.setState({posts: json, isLoading: false}); 
         })
         .catch((error) => {
@@ -82,9 +82,6 @@ logout = () => {
             console.log(error);
         })
 }
-updateSearch = (value) => {
- this.setState({search: value});
-}
 
 
 
@@ -96,24 +93,22 @@ render() {
     if(this.state.isLoading) {
         return (
             <View>
-                <Text>Loading...</Text>
+                <ActivityIndicator animating size='large' />
             </View>
         );
     } else {
         return (
             
-        <ScrollView>
-            <SearchBar
-                lightTheme
-                placeholder="Type Here..."
-                onChangeText={this.updateSearch}
-                value={this.state.search}
-            />
+        <View>
+            
+            
+           
+            
           <HomeContext.Provider value={value}>
               <HomeConsumer/>
               </HomeContext.Provider>
             <Button title='Logout' onPress={() => this.logout()}/>
-        </ScrollView>
+        </View>
         
         );
         }

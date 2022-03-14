@@ -1,8 +1,10 @@
-import { StyleSheet, Text, View, Button, TextInput } from 'react-native';
+import { StyleSheet, Text, View, Button, TextInput, FlatList, ActivityIndicator, Input } from 'react-native';
 import React, { Component } from 'react';
 import { ScrollView } from 'react-native-gesture-handler';
 import FriendRequest from '../components/FriendRequest';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { SearchBar, ListItem } from 'react-native-elements';
+import UserItem from '../components/UserItem';
 
 const getData = async(done) => {
     try {
@@ -20,13 +22,14 @@ class FriendRequests extends Component {
         this.state = {
             isLoading: true,
             login_data: {},
-            friendRequests: []
+            friendRequests: [],
+            search_data: [],
+            search: ''
         };
     }
 
     
     getFriendsRequests = () => {
-        console.log(this.state.login_data.token);
         fetch('http://10.0.2.2:3333/api/1.0.0/friendrequests', {
             method: 'GET',
             headers: {
@@ -46,6 +49,54 @@ class FriendRequests extends Component {
         })
 
     }
+    updateSearch = (value) => {
+        this.setState({search: value});
+        this.searchFriends();
+       }
+searchFriends = () => {
+    
+    fetch('http://10.0.2.2:3333/api/1.0.0/search/?q=' + this.state.search , {
+        method: 'GET',    
+        headers: {
+                'X-Authorization': this.state.login_data.token
+            }
+        })
+        .then((response) => response.json())
+        .then((json) => {
+            console.log(json);
+            this.setState({search_data: json, isLoading: false});
+        })
+        .catch((error) => {
+            console.log(error);
+        })
+}
+
+    renderHeader = () => {
+        return (
+        //     <SearchBar
+        //     placeholder="Type Here..."
+        //     lightTheme
+        //     round
+        //     onChangeText={text => this.updateSearch(text)}
+        //     autoCorrect={false}
+        //     value={this.state.value}
+        //   />
+
+        <View><Text>return</Text></View>
+        );
+      }
+      renderSeparator = () => {
+        return (
+          <View
+            style={{
+              height: 1,
+              width: '86%',
+              backgroundColor: '#CED0CE',
+              marginLeft: '14%',
+            }}
+          />
+        );
+      };
     componentDidMount() {
         getData((data) => {
             this.setState({
@@ -58,14 +109,36 @@ class FriendRequests extends Component {
         if(this.state.isLoading) {
             return(
                 <View>
-                    <Text>Loading...</Text>
+                    <ActivityIndicator animating size='large' />
                 </View>
             );
         } else {
         return (
-            <ScrollView>
-                <FriendRequest/>
-            </ScrollView>
+            <View style={{ flex: 1 }}>
+             <SearchBar
+             placeholder="Type Here..."
+             lightTheme
+             round
+             onChangeText={text => this.updateSearch(text)}
+             autoCorrect={false}
+             value={this.state.search}
+           />
+           {this.state.friendRequests.map(request => 
+                    <FriendRequest key={request.user_id} request={request}/>
+                 )}
+                <FlatList data={this.state.search_data}
+            renderItem={({item}) => (
+                <UserItem key={item.user_id} user={item} login_data={this.state.login_data}></UserItem>
+        
+            )}
+            keyExtractor={item => item.email}
+            ItemSeparatorComponent={this.renderSeparator}
+            // ListHeaderComponent={() => {this.renderHeader}}
+            />
+
+            
+               
+            </View>
         );
     }
 }
