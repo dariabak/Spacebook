@@ -62,7 +62,7 @@ class PostsFeed extends Component {
         return (
             <View>
                 {this.state.listOfPosts.map(post => 
-                    <Post post={{post}}/>
+                    <Post key={post.id} post={{post}}/>
                  )}
             </View>
         );

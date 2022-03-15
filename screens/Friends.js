@@ -19,7 +19,8 @@ constructor(props) {
     super(props);
     this.state = {
         listOfFriends: [],
-        isLoading: true
+        isLoading: true, 
+        login_data: {}
     }
 }
 
