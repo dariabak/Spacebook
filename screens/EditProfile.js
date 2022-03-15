@@ -45,7 +45,10 @@ class EditProfile extends Component {
         .then((json) => {
             console.log(json);
             this.setState({
-                data: json
+                data: json,
+                first_name: json.first_name,
+                last_name: json.last_name,
+                email: json.email
             })
         })
         .catch((error) => {
@@ -70,16 +73,22 @@ class EditProfile extends Component {
             console.log(error);
         })
     }
+    onChangeHandler = (key, value) => {
+        this.setState({
+            key: value
+        })
+    }
+
     render() {
         return(
             <View>
                 <Text>First name: </Text>
-                <TextInput placeholder={this.state.data.first_name}></TextInput>
+                <TextInput placeholder={this.state.data.first_name} value={this.state.first_name} onChangeText={value => this.setState({first_name: value})}></TextInput>
                 <Text>Last name:</Text>
-                <TextInput placeholder={this.state.data.last_name}/>
+                <TextInput placeholder={this.state.data.last_name} value={this.state.last_name} onChangeText={value => this.setState({last_name: value})}/>
                 <Text>Email:</Text>
-                <TextInput placeholder={this.state.data.email}/>
-                <Button title='Save' onPress={() => this.updateUserInfo}></Button>
+                <TextInput placeholder={this.state.data.email} value={this.state.email} onChangeText={value => this.setState({email: value})}/>
+                <Button title='Save' onPress={() => this.updateUserInfo()}></Button>
             </View>
         );
     }
