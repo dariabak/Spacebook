@@ -1,5 +1,5 @@
 
-import { StyleSheet, Text, View, Button, TextInput, StatusBar, SafeAreaView } from 'react-native';
+import { StyleSheet, Text, View, Button, TextInput, StatusBar } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { Component, useContext } from 'react';
 import { loginContext } from '../loginContext';
@@ -74,7 +74,7 @@ class Login extends Component {
 
     render() {
         return (
-            <SafeAreaView>
+            
             <View>
                 <Text>Login</Text>
                 <TextInput placeholder="Email" onChangeText={this.handleEmailInput} value={this.state.email}/>
@@ -82,7 +82,7 @@ class Login extends Component {
                 <Button title="Login" onPress={() => this.login()}/>
                 <Button title="Sign Up" onPress={() => this.signUp()}/>
             </View>
-            </SafeAreaView>  
+          
         );
     }
 

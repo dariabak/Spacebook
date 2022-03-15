@@ -95,7 +95,7 @@ class Profile extends Component {
                     <Text style={styles.userName}>First name: {this.state.user_data.first_name} </Text>
                     <Text>Last name: {this.state.user_data.last_name}</Text>
                     <Text>Friends: {this.state.user_data.friend_count}</Text>
-                    <Button title='Edit profile'/>
+                    <Button title='Edit profile' onPress={() => this.props.navigation.navigate('EditProfile')}/>
                     <Button title='Friends' onPress={() => this.props.navigation.navigate('Friends')}/>
                     
                 </ScrollView>

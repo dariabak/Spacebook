@@ -1,3 +1,4 @@
+// import 'react-native-gesture-handler';
 import React, { Component, useState}  from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
 import { NavigationContainer} from '@react-navigation/native';
@@ -8,9 +9,13 @@ import HomeNavigator from './HomeNavigator';
 import { loginContext } from './loginContext';
 import { SearchBar } from 'react-native-elements';
 import Friends from './screens/Friends';
+import DrawerNavigator from './DrawerNavigator';
+import EditProfile from './screens/EditProfile';
+
 
 
 const Stack = createNativeStackNavigator();
+
 
 
 class App extends Component {
@@ -43,7 +48,13 @@ class App extends Component {
               headerShown: false,
             }}
               />
-              <Stack.Screen name='Friends' component={Friends}/></>) 
+              <Stack.Screen name='DrawerNavigator' component={DrawerNavigator} 
+              options={{
+              headerShown: false,
+            }}/>
+              <Stack.Screen name='Friends' component={Friends}/>
+              <Stack.Screen name='EditProfile' component={EditProfile}/>
+              </>) 
           : (
           <>
           <Stack.Screen name="Login" component={Login} options={{ 
