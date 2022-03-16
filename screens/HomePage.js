@@ -99,12 +99,12 @@ render() {
     } else {
         return (
             
-        <View>
+        <ScrollView>
             
             <NewPost addedNewPost={this.state.addedNewPost}/>
             <PostsFeed listOfPosts={this.state.posts}/>
             <Button title='Logout' onPress={() => this.logout()}/>
-        </View>
+        </ScrollView>
         
         );
         }

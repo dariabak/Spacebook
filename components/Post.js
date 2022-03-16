@@ -24,7 +24,7 @@ class Post extends Component {
     }
     likePost = () => {
         console.log(this.props.post.post.post_id);
-        fetch('http://10.0.2.2:3333/api/1.0.0/user/'  + this.state.login_data.id + '/post/' + this.props.post.post.post_id + '/like', {
+        fetch('http://10.0.2.2:3333/api/1.0.0/user/'  + this.props.post.post.author.user_id + '/post/' + this.props.post.post.post_id + '/like', {
             method: 'POST',
             headers: {
                 'X-Authorization': this.state.login_data.token

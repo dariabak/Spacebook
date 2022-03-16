@@ -22,7 +22,8 @@ class FriendProfile extends Component {
             login_data: {},
             user_data: {},
             user_photo: null,
-            isLoading: true
+            isLoading: true,
+            posts: []
         }
     }
 
@@ -36,10 +37,8 @@ class FriendProfile extends Component {
         })
         .then((response) => response.json())
         .then((json) => {
-            console.log(json);
             this.setState ({
-                user_data: json,
-                isLoading: false
+                user_data: json
             });
 
         })
@@ -48,9 +47,22 @@ class FriendProfile extends Component {
         })
     }
 
-    // getFriendPosts = () => {
-
-    // }
+    getFriendPosts = () => {
+        fetch('http://10.0.2.2:3333/api/1.0.0/user/' + this.props.route.params.friend.user_id + '/post', {
+        method: 'GET',    
+        headers: {
+                'X-Authorization': this.state.login_data.token
+            }
+        })
+        .then((response) => response.json())
+        .then((json) => {
+            console.log(json);
+            this.setState({posts: json, isLoading: false}); 
+        })
+        .catch((error) => {
+            console.log(error);
+        })
+    }
     getFriendPhoto = () => {
         FileSystem.downloadAsync(
             'http://10.0.2.2:3333/api/1.0.0/user/' + this.props.route.params.friend.user_id + '/photo',
@@ -63,17 +75,22 @@ class FriendProfile extends Component {
     componentDidMount() {
         getData((data) => {
             this.setState({
-                login_data: data,
-                isLoading: false
+                login_data: data
             });
             this.getFriendDetails();
             this.getFriendPhoto();
+            this.getFriendPosts();
         });
     }
 
     render() {
+        if(this.state.isLoading){
+            return(
+                <View><Text>Loading...</Text></View>
+            );
+        } else {
         return(
-            <View>
+            <ScrollView>
                 <Image
                         source={{
                         uri: this.state.user_photo,
@@ -87,9 +104,10 @@ class FriendProfile extends Component {
                 <Text>First name: {this.state.user_data.first_name} </Text>
                     <Text>Last name: {this.state.user_data.last_name}</Text>
                     <Text>Friends: {this.state.user_data.friend_count}</Text>
-                    <PostsFeed />
-            </View>
+                    <PostsFeed listOfPosts={this.state.posts}/>
+            </ScrollView>
         );
+        }
     }
 }
 
