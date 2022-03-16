@@ -2,7 +2,9 @@ import { StyleSheet, Text, View, Button, TextInput, FlatList, ActivityIndicator,
 import React, { Component } from 'react';
 
 class UserItem extends Component {
-
+    constructor(props) {
+        super(props);
+    }
 
 getUserPhoto = () => {
 
@@ -26,6 +28,7 @@ render() {
             <Text>{this.props.user.user_givenname}</Text>
             <Text>{this.props.user.user_familyname}</Text>
             <Button title='Send friend request' onPress={this.sendFriendRequest}/>
+            <Button title='See profile' onPress={() => this.props.navigation.navigate('FriendProfile')}/>
         </View>
     );
 }

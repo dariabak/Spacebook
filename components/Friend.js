@@ -38,6 +38,7 @@ class Friend extends Component {
                     />
                 <Text>{this.props.friend.user_givenname}</Text>
                 <Text>{this.props.friend.user_familyname}</Text>
+                <Button title='See profile' onPress={() => this.props.navigation.navigate('FriendProfile', {friend: this.props.friend})}/>
             </View>
         );
     }

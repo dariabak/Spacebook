@@ -60,7 +60,7 @@ componentDidMount() {
         return(
             <View>
                 {this.state.listOfFriends.map(friend => 
-                    <Friend key={friend.user_id} login_data={this.state.login_data} friend={friend}/>
+                    <Friend navigation={this.props.navigation} key={friend.user_id} login_data={this.state.login_data} friend={friend}/>
                  )}
             </View>
         );
