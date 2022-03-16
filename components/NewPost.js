@@ -35,7 +35,7 @@ addNewPost = () => {
         })
         .then((response) => response.json())
         .then((json) => {
-            this.context.addedNewPost();
+            this.props.addedNewPost();
         })
         .catch((error) => {
             console.log(error);

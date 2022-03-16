@@ -101,12 +101,8 @@ render() {
             
         <View>
             
-            
-           
-            
-          <HomeContext.Provider value={value}>
-              <HomeConsumer/>
-              </HomeContext.Provider>
+            <NewPost addedNewPost={this.state.addedNewPost}/>
+            <PostsFeed listOfPosts={this.state.posts}/>
             <Button title='Logout' onPress={() => this.logout()}/>
         </View>
         

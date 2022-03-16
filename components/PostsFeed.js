@@ -16,7 +16,6 @@ const getData = async (done) => {
 }
 
 class PostsFeed extends Component {
-    static contextType = HomeContext;
     constructor(props) {
         super(props);
         this.state = {
@@ -48,7 +47,7 @@ class PostsFeed extends Component {
         getData((data) => {
             this.setState({
                 login_data: data,
-                listOfPosts: this.context.listOfPosts,
+                listOfPosts: this.props.listOfPosts,
                 isLoading: false
             });
         });
