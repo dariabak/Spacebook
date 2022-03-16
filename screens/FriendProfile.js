@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import { View, Text, StyleSheet, Image, ScrollView, Button} from "react-native";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-// import * as FileSystem from 'expo-file-system';
+import * as FileSystem from 'expo-file-system';
+import PostsFeed from "../components/PostsFeed";
 
 const getData = async (done) => {
     try {
@@ -26,7 +27,7 @@ class FriendProfile extends Component {
     }
 
     getFriendDetails = () => {
-        fetch('http://10.0.2.2:3333/api/1.0.0/user/'  + this.state.user_data.user_id, {
+        fetch('http://10.0.2.2:3333/api/1.0.0/user/'  + this.props.route.params.friend.user_id, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -50,9 +51,15 @@ class FriendProfile extends Component {
     // getFriendPosts = () => {
 
     // }
-    // getFriendPhoto = () => {
-
-    // }
+    getFriendPhoto = () => {
+        FileSystem.downloadAsync(
+            'http://10.0.2.2:3333/api/1.0.0/user/' + this.props.route.params.friend.user_id + '/photo',
+            FileSystem.documentDirectory + 'friendProfilePicture',
+            {headers: {"X-Authorization": this.state.login_data.token}})
+            .then(({uri}) => {
+                this.setState({user_photo: uri})
+            })
+    }
     componentDidMount() {
         getData((data) => {
             this.setState({
@@ -60,15 +67,27 @@ class FriendProfile extends Component {
                 isLoading: false
             });
             this.getFriendDetails();
+            this.getFriendPhoto();
         });
     }
 
     render() {
         return(
             <View>
-                <Text>First name: {this.state.user_data.user_givenname} </Text>
-                    <Text>Last name: {this.state.user_data.user_familyname}</Text>
+                <Image
+                        source={{
+                        uri: this.state.user_photo,
+                        }}
+                        style={{
+                        width: 400,
+                        height: 300,
+                        borderWidth: 5 
+                        }}
+                    />
+                <Text>First name: {this.state.user_data.first_name} </Text>
+                    <Text>Last name: {this.state.user_data.last_name}</Text>
                     <Text>Friends: {this.state.user_data.friend_count}</Text>
+                    <PostsFeed />
             </View>
         );
     }
