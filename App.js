@@ -8,14 +8,16 @@ import SignUp from './screens/SignUp';
 import HomeNavigator from './HomeNavigator';
 import { loginContext } from './loginContext';
 import { SearchBar } from 'react-native-elements';
-import Friends from './screens/Friends';
 import DrawerNavigator from './DrawerNavigator';
+import Friends from './screens/Friends';
 import EditProfile from './screens/EditProfile';
 import FriendProfile from './screens/FriendProfile';
 import Friend from './components/Friend';
+import Settings from './screens/Settings';
 
 
 const Stack = createNativeStackNavigator();
+
 
 class App extends Component {
   constructor(props) {
@@ -39,18 +41,16 @@ class App extends Component {
     return (
       <loginContext.Provider value={value}>
       <NavigationContainer>
+
+
           <Stack.Navigator>      
          
           { this.state.isLoggedIn ? (
           <><Stack.Screen name="HomeNavigator" component={HomeNavigator} 
             options={{
               headerShown: false,
-            }}
-              />
-              <Stack.Screen name='DrawerNavigator' component={DrawerNavigator} 
-              options={{
-              headerShown: false,
             }}/>
+               
               <Stack.Screen name='Friends' component={Friends}/>
               <Stack.Screen name='EditProfile' component={EditProfile}/>
               <Stack.Screen name='FriendProfile' component={FriendProfile}/>

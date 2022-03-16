@@ -46,6 +46,12 @@ class Post extends Component {
             });
         })
     }
+    isItUserPost = () => {
+        if(this.props.post.post.author.user_id == this.state.login_data.id) {
+            return true;
+        }
+        return false;
+    }
     render() {
         const data = this.props.post;
         return(
@@ -55,7 +61,11 @@ class Post extends Component {
                 <Text>Likes: {this.props.post.post.numLikes}</Text>
                 <Button title='Like' onPress={this.likePost}></Button>
                 <Text>{this.props.post.post.timestamp}</Text>
-                
+                {this.isItUserPost() ? (
+                    <>
+                    <Button title='Edit'></Button>
+                    </>
+                ) : (<></>)}
             </View>
         ); 
     }

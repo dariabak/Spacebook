@@ -16,6 +16,7 @@ function HomeNavigator(props) {
         <Tab.Screen name="Home" component={HomePage} />
         <Tab.Screen name="Profile" component={Profile} />
         <Tab.Screen name="Friend Requests" component={FriendRequests} />
+
     </Tab.Navigator>
   );
 }
