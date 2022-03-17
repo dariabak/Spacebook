@@ -24,19 +24,27 @@ class App extends Component {
     super(props);
     this.state = {
       isLoggedIn: false,
-      setAuth: this.setAuth
+      setAuth: this.setAuth,
+      token: '',
+      id: 0
  
     };
   }
   setAuth = (value) =>{
-    this.setState({isLoggedIn: value});
+    this.setState({
+      isLoggedIn: value.isLoggedIn,
+      token: value.token,
+      id: value.id
+    });
   }
 
   render() {
     
     const value = {
       isLoggedIn: this.state.isLoggedIn,
-      setAuth: this.state.setAuth
+      setAuth: this.state.setAuth,
+      token: this.state.token,
+      id: this.state.id
     }
     return (
       <loginContext.Provider value={value}>

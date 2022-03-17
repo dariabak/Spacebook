@@ -3,23 +3,13 @@ import React, { Component } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Post from './Post';
 import { HomeContext } from '../HomeContext';
+import { loginContext } from '../loginContext';
 
-
-const getData = async (done) => {
-    try {
-        const jsonValue = await AsyncStorage.getItem('@spacebook_details')
-        const data = JSON.parse(jsonValue);
-        return done(data);
-    } catch (e) {
-        console.log(e);
-    }
-}
 
 class PostsFeed extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            login_data: {},
             listOfPosts: [],
             isLoading: true
         };
@@ -44,13 +34,12 @@ class PostsFeed extends Component {
     //         })
     // }
     componentDidMount() {
-        getData((data) => {
+    
             this.setState({
-                login_data: data,
                 listOfPosts: this.props.listOfPosts,
                 isLoading: false
             });
-        });
+     
     }
 
     render() {

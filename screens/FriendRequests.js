@@ -5,23 +5,15 @@ import FriendRequest from '../components/FriendRequest';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { SearchBar, ListItem } from 'react-native-elements';
 import UserItem from '../components/UserItem';
+import { loginContext } from '../loginContext';
 
-const getData = async(done) => {
-    try {
-        const jsonValue = await AsyncStorage.getItem('@spacebook_details');    
-        const data = JSON.parse(jsonValue);
-        return done(data);
-    } catch (e) {
-        console.log(e);
-    }
-}
 
 class FriendRequests extends Component {
+    static contextType = loginContext;
     constructor(props) {
         super(props);
         this.state = {
             isLoading: true,
-            login_data: {},
             friendRequests: [],
             search_data: [],
             search: ''
@@ -34,7 +26,7 @@ class FriendRequests extends Component {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                'X-Authorization': this.state.login_data.token
+                'X-Authorization': this.context.token
             }
         })
         .then((response) => {
@@ -58,7 +50,7 @@ searchFriends = () => {
     fetch('http://10.0.2.2:3333/api/1.0.0/search/?q=' + this.state.search , {
         method: 'GET',    
         headers: {
-                'X-Authorization': this.state.login_data.token
+                'X-Authorization': this.context.token
             }
         })
         .then((response) => response.json())
@@ -98,12 +90,9 @@ searchFriends = () => {
         );
       };
     componentDidMount() {
-        getData((data) => {
-            this.setState({
-                login_data: data
-            });
+       
             this.getFriendsRequests();
-        });
+        
     }
     render() {
         if(this.state.isLoading) {
@@ -124,11 +113,11 @@ searchFriends = () => {
              value={this.state.search}
            />
            {this.state.friendRequests.map(request => 
-                    <FriendRequest key={request.user_id} login_data={this.state.login_data} request={request}/>
+                    <FriendRequest key={request.user_id} request={request}/>
                  )}
                 <FlatList data={this.state.search_data}
             renderItem={({item}) => (
-                <UserItem key={item.user_id} user={item} navigation={this.props.navigation} login_data={this.state.login_data}></UserItem>
+                <UserItem key={item.user_id} user={item} navigation={this.props.navigation}></UserItem>
         
             )}
             keyExtractor={item => item.email}

@@ -1,7 +1,9 @@
 import { StyleSheet, Text, View, Button, TextInput, FlatList, ActivityIndicator, Input } from 'react-native';
 import React, { Component } from 'react';
+import { loginContext } from '../loginContext';
 
 class UserItem extends Component {
+    static contextType = loginContext;
     constructor(props) {
         super(props);
     }
@@ -13,7 +15,7 @@ sendFriendRequest = () => {
     fetch('http://10.0.2.2:3333/api/1.0.0/user/' + this.props.user.user_id + '/friends' , {
         method: 'POST',    
         headers: {
-                'X-Authorization': this.props.login_data.token
+                'X-Authorization': this.context.token
             }
         })
         .then((response) => console.log(response.status))

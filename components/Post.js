@@ -1,25 +1,17 @@
-import { StyleSheet, Text, View, Button, TextInput, ColorPropType } from 'react-native';
+import { StyleSheet, Text, View, Button, TextInput, ColorPropType, Modal } from 'react-native';
 import React, { Component } from 'react';
 import { HomeContext } from '../HomeContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { loginContext } from '../loginContext';
 
-
-const getData = async (done) => {
-    try {
-        const jsonValue = await AsyncStorage.getItem('@spacebook_details')
-        const data = JSON.parse(jsonValue);
-        return done(data);
-    } catch (e) {
-        console.log(e);
-    }
-}
 
 class Post extends Component {
     // post = this.props.post;
+    static contextType = loginContext;
     constructor(props){
         super(props);
         this.state = {
-            login_data: {}
+            isModalVisible: false  
         }
     }
     likePost = () => {
@@ -27,7 +19,7 @@ class Post extends Component {
         fetch('http://10.0.2.2:3333/api/1.0.0/user/'  + this.props.post.post.author.user_id + '/post/' + this.props.post.post.post_id + '/like', {
             method: 'POST',
             headers: {
-                'X-Authorization': this.state.login_data.token
+                'X-Authorization': this.context.token
             }
         
         })
@@ -40,18 +32,25 @@ class Post extends Component {
         })
     }
     componentDidMount() {
-        getData((data) => {
-            this.setState({
-                login_data: data        
-            });
-        })
+       
     }
     isItUserPost = () => {
-        if(this.props.post.post.author.user_id == this.state.login_data.id) {
+        if(this.props.post.post.author.user_id == this.context.id) {
             return true;
         }
         return false;
     }
+    toggleModal = () => {
+        let isTrue = true;
+        if(this.state.isModalVisible){
+            isTrue = false;
+        } 
+
+        this.setState({
+            isModalVisible: isTrue
+        });
+    }
+    
     render() {
         const data = this.props.post;
         return(
@@ -63,9 +62,15 @@ class Post extends Component {
                 <Text>{this.props.post.post.timestamp}</Text>
                 {this.isItUserPost() ? (
                     <>
-                    <Button title='Edit'></Button>
+                    <Button title='Edit' onPress={this.toggleModal}></Button>
+                    {/* <Modal isModalVisible={this.state.isModalVisible}>
+                        <View>
+                            <Text>Yeey</Text>
+                        </View>
+                    </Modal> */}
                     </>
                 ) : (<></>)}
+
             </View>
         ); 
     }

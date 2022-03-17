@@ -11,15 +11,7 @@ import PostsFeed from '../components/PostsFeed';
 import HomeConsumer from '../HomeConsumer';
 import Search from '../components/Search';
 
-const getData = async (done) => {
-    try {
-        const jsonValue = await AsyncStorage.getItem('@spacebook_details')
-        const data = JSON.parse(jsonValue);
-        return done(data);
-    } catch (e) {
-        console.log(e);
-    }
-}
+
 const clearAsyncStorage = async() => {
     AsyncStorage.clear();
 }
@@ -29,7 +21,6 @@ class HomePage extends Component {
 constructor(props) {
     super(props);
     this.state = {
-        login_data: {},
         isLoading: true,
         addedNewPost: this.addedNewPost,
         posts: [],
@@ -38,12 +29,11 @@ constructor(props) {
     }
 }
 componentDidMount() {
-    getData((data) => {
-        this.setState({
-            login_data: data
-        });
+    console.log(this.context);
+   this.setState({
+       login_data: this.context
+   })
     this.getUserPosts();
-    });
 }
 addedNewPost = () => {
     this.setState({isLoading: true});
@@ -51,10 +41,10 @@ this.getUserPosts();
 }
 
 getUserPosts = () => {
-    fetch('http://10.0.2.2:3333/api/1.0.0/user/' + this.state.login_data.id + '/post', {
+    fetch('http://10.0.2.2:3333/api/1.0.0/user/' + this.context.id + '/post', {
         method: 'GET',    
         headers: {
-                'X-Authorization': this.state.login_data.token
+                'X-Authorization': this.context.token
             }
         })
         .then((response) => response.json())
@@ -71,7 +61,7 @@ logout = () => {
         method: 'POST',    
         headers: {
                 'Content-Type': 'application/json',
-                'X-Authorization': this.state.login_data.token
+                'X-Authorization': this.context.token
             }
         })
         .then(() => {

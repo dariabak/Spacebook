@@ -4,22 +4,15 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import * as FileSystem from 'expo-file-system';
 import PostsFeed from "../components/PostsFeed";
+import { loginContext } from "../loginContext";
 
-const getData = async (done) => {
-    try {
-        const jsonValue = await AsyncStorage.getItem('@spacebook_details')
-        const data = JSON.parse(jsonValue);
-        return done(data);
-    } catch (e) {
-        console.log(e);
-    }
-}
+
 
 class FriendProfile extends Component {
+    static contextType = loginContext;
     constructor(props) {
         super(props);
         this.state = {
-            login_data: {},
             user_data: {},
             user_photo: null,
             isLoading: true,
@@ -32,7 +25,7 @@ class FriendProfile extends Component {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                'X-Authorization': this.state.login_data.token
+                'X-Authorization': this.context.token
             }
         })
         .then((response) => response.json())
@@ -51,7 +44,7 @@ class FriendProfile extends Component {
         fetch('http://10.0.2.2:3333/api/1.0.0/user/' + this.props.route.params.friend.user_id + '/post', {
         method: 'GET',    
         headers: {
-                'X-Authorization': this.state.login_data.token
+                'X-Authorization': this.context.token
             }
         })
         .then((response) => response.json())
@@ -67,20 +60,17 @@ class FriendProfile extends Component {
         FileSystem.downloadAsync(
             'http://10.0.2.2:3333/api/1.0.0/user/' + this.props.route.params.friend.user_id + '/photo',
             FileSystem.documentDirectory + 'friendProfilePicture',
-            {headers: {"X-Authorization": this.state.login_data.token}})
+            {headers: {"X-Authorization": this.context.token}})
             .then(({uri}) => {
                 this.setState({user_photo: uri})
             })
     }
     componentDidMount() {
-        getData((data) => {
-            this.setState({
-                login_data: data
-            });
+        
             this.getFriendDetails();
             this.getFriendPhoto();
             this.getFriendPosts();
-        });
+    
     }
 
     render() {

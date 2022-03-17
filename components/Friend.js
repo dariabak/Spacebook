@@ -1,8 +1,10 @@
 import { Image, Text, View, Button, TextInput, FlatList, ActivityIndicator, Input, requireNativeComponent } from 'react-native';
 import React, { Component } from 'react';
 import * as FileSystem from 'expo-file-system';
+import { loginContext } from '../loginContext';
 
 class Friend extends Component {
+    static contextType = loginContext;
     constructor(props){
         super(props);
         this.state = {
@@ -14,7 +16,7 @@ class Friend extends Component {
         FileSystem.downloadAsync(
             'http://10.0.2.2:3333/api/1.0.0/user/' + this.props.friend.user_id + '/photo',
             FileSystem.documentDirectory + 'friendPicture',
-            {headers: {"X-Authorization": this.props.login_data.token}})
+            {headers: {"X-Authorization": this.context.token}})
             .then(({uri}) => {
                 this.setState({friend_photo: uri})
             })

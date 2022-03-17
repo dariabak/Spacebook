@@ -61,10 +61,14 @@ class Login extends Component {
         })
         .then((response) => response.json())
         .then((json) => {
-            console.log(json);
             this.state.isLoggedIn = true;
+            const value = {
+                isLoggedIn: true,
+                token: json.token,
+                id: json.id
+            }
             storeData(json);
-            this.context.setAuth(true);
+            this.context.setAuth(value);
             })
         .catch((error) => {
             clearAsyncStorage();

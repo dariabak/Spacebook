@@ -4,27 +4,18 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import Constants from 'expo-constants';
 import * as FileSystem from 'expo-file-system';
+import { loginContext } from "../loginContext";
 
 
 
-const getData = async(done) => {
-    try {
-        const jsonValue = await AsyncStorage.getItem('@spacebook_details')
-        const data = JSON.parse(jsonValue);
-        return done(data);
-    } catch (e) {
-        console.log(e);
-    }
-}
 
 
 
 class Profile extends Component {
-
+static contextType = loginContext;
     constructor(props) {
         super(props);
         this.state = {
-            login_data: {},
             user_data: {},
             user_photo: null,
             isLoading: true
@@ -32,11 +23,11 @@ class Profile extends Component {
     }
 
     getUserDetails = () => {
-        fetch('http://10.0.2.2:3333/api/1.0.0/user/'  + this.state.login_data.id, {
+        fetch('http://10.0.2.2:3333/api/1.0.0/user/'  + this.context.id, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                'X-Authorization': this.state.login_data.token
+                'X-Authorization': this.context.token
             }
         })
         .then((response) => response.json())
@@ -53,26 +44,24 @@ class Profile extends Component {
     }
     getUserPhoto = () => {
         FileSystem.downloadAsync(
-            'http://10.0.2.2:3333/api/1.0.0/user/' + this.state.login_data.id + '/photo',
+            'http://10.0.2.2:3333/api/1.0.0/user/' + this.context.id + '/photo',
             FileSystem.documentDirectory + 'profilePicture',
-            {headers: {"X-Authorization": this.state.login_data.token}})
+            {headers: {"X-Authorization": this.context.token}})
             .then(({uri}) => {
                 this.setState({user_photo: uri})
             })
           
     }
     componentDidMount() {
-        getData((data) => {
-            this.setState({
-                login_data: data
-            });
+    
+           
             this.getUserPhoto();
             this.getUserDetails();
-        });
+        
     }
     
     render() {
-        const url = 'http://10.0.2.2:3333/api/1.0.0/user/' + this.state.login_data.id + '/photo';
+        const url = 'http://10.0.2.2:3333/api/1.0.0/user/' + this.context.id + '/photo';
         if(this.state.isLoading){
         return(
             <View>

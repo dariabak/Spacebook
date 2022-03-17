@@ -2,32 +2,23 @@ import { StyleSheet, Text, View, Button, TextInput, ColorPropType } from 'react-
 import React, { Component } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { HomeContext } from '../HomeContext';
+import { loginContext } from '../loginContext';
 
-const getData = async (done) => {
-    try {
-        const jsonValue = await AsyncStorage.getItem('@spacebook_details')
-        const data = JSON.parse(jsonValue);
-        return done(data);
-    } catch (e) {
-        console.log(e);
-    }
-}
 
 class NewPost extends Component {
-    static contextType = HomeContext;
+    static contextType = loginContext;
     constructor(props) {
         super(props);
         this.state = {
-            post: '',
-            login_data: {}
+            post: ''
         }
     }
 addNewPost = () => {
-    fetch('http://10.0.2.2:3333/api/1.0.0/user/'  + this.state.login_data.id + '/post', {
+    fetch('http://10.0.2.2:3333/api/1.0.0/user/'  + this.context.id + '/post', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'X-Authorization': this.state.login_data.token
+                'X-Authorization': this.context.token
             },
             body: JSON.stringify({
                 text: this.state.post
@@ -43,11 +34,7 @@ addNewPost = () => {
 }
 
 componentDidMount() {
-    getData((data) => {
-        this.setState({
-            login_data: data        
-        });
-    })
+   
 }
 
 handlePostInput = (value) => {
