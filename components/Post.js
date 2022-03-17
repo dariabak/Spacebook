@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Button, TextInput, ColorPropType, Modal } from 'react-native';
+import { StyleSheet, Text, View, Button, TextInput, ColorPropType, Modal, Pressable } from 'react-native';
 import React, { Component } from 'react';
 import { HomeContext } from '../HomeContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -42,7 +42,7 @@ class Post extends Component {
     }
     toggleModal = () => {
         let isTrue = true;
-        if(this.state.isModalVisible){
+        if(this.state.isVisible){
             isTrue = false;
         } 
 
@@ -63,11 +63,22 @@ class Post extends Component {
                 {this.isItUserPost() ? (
                     <>
                     <Button title='Edit' onPress={this.toggleModal}></Button>
-                    {/* <Modal isModalVisible={this.state.isModalVisible}>
+                    <Modal 
+                        visible={this.state.isModalVisible}
+                        onRequestClose={() => {
+                            this.setState({isModalVisible: false});
+                        }}
+                        >
                         <View>
                             <Text>Yeey</Text>
+                            <Pressable
+                            onPress={() => this.setState({isModalVisible: false})}
+                            >
+                        <Text>Hide Modal</Text>
+                            </Pressable>
+           
                         </View>
-                    </Modal> */}
+                    </Modal>
                     </>
                 ) : (<></>)}
 
