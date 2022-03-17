@@ -1,9 +1,11 @@
-import { StyleSheet, Text, View, Button, TextInput, ColorPropType, Modal, Pressable } from 'react-native';
+import { StyleSheet, Text, View, Button, TextInput, Image, Modal, TouchableOpacity } from 'react-native';
 import React, { Component } from 'react';
 import { HomeContext } from '../HomeContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { loginContext } from '../loginContext';
 import EditPost from './EditPost';
+import { styles } from '../styles/style';
+import * as FileSystem from 'expo-file-system';
 
 
 class Post extends Component {
@@ -13,7 +15,8 @@ class Post extends Component {
         super(props);
         this.state = {
             isModalVisible: false,
-            numLikes: 0
+            numLikes: 0,
+            user_photo: null
         }
     }
     likePost = () => {
@@ -46,6 +49,7 @@ class Post extends Component {
        this.setState({
             numLikes: this.props.post.post.numLikes
        });
+       this.getUserImage();
     }
     isItUserPost = () => {
         if(this.props.post.post.author.user_id == this.context.id) {
@@ -63,6 +67,16 @@ class Post extends Component {
             isModalVisible: isTrue
         });
     }
+    getUserImage = () => {
+        FileSystem.downloadAsync(
+            'http://10.0.2.2:3333/api/1.0.0/user/' + this.props.post.post.author.user_id + '/photo',
+            FileSystem.documentDirectory + 'profilePicture',
+            {headers: {"X-Authorization": this.context.token}})
+            .then(({uri}) => {
+                this.setState({user_photo: uri})
+            })
+    }
+
     dislikePost = () => {
         fetch('http://10.0.2.2:3333/api/1.0.0/user/'  + this.props.post.post.author.user_id + '/post/' + this.props.post.post.post_id + '/like', {
             method: 'DELETE',
@@ -87,15 +101,31 @@ class Post extends Component {
     render() {
         const data = this.props.post;
         return(
-            <View style={{padding: 15, margin: 5, backgroundColor: '#ececec'}}>
-                <Text>{this.props.post.post.author.first_name} {this.props.post.post.author.last_name}</Text>
-                <Text>{this.props.post.post.text}</Text>
+            <View style={styles.postContainer}>
+                <View style={styles.postData}>
+                    <Image 
+                    source={{
+                        uri: this.state.user_photo,
+                        }}
+                        style={{
+                        width: 50,
+                        height: 50,
+                        borderWidth: 5,
+                        borderRadius: 25, 
+                        }}/>
+                    <View style={styles.userNameText}>
+                        <Text style={{fontSize: 20}}>{this.props.post.post.author.first_name} {this.props.post.post.author.last_name}</Text>
+                        <Text style={{fontSize: 12}}>{this.props.post.post.timestamp}</Text>
+                    </View>
+                    <Text style={{fontSize: 14, marginTop: 8, marginBottom: 8}}>{this.props.post.post.text}</Text>
                 <Text>Likes: {this.state.numLikes}</Text>
                 
-                <Text>{this.props.post.post.timestamp}</Text>
+                
                 {this.isItUserPost() ? (
                     <>
-                    <Button title='Edit' onPress={this.toggleModal}></Button>
+                    <TouchableOpacity style={styles.editButton} onPress={this.toggleModal}>
+                        <Text style={{color: '#ffffff'}}>Edit</Text>
+                    </TouchableOpacity>
                     <Modal 
                         visible={this.state.isModalVisible}
                         onRequestClose={() => {
@@ -105,7 +135,7 @@ class Post extends Component {
                         <View>
                             <EditPost post_id={this.props.post.post.post_id}/>
                             
-                                <Button title='Close' onPress={() => this.setState({isModalVisible: false})}></Button>
+                                <Button color='#B22222' title='Close' onPress={() => this.setState({isModalVisible: false})}></Button>
                           
            
                         </View>
@@ -115,7 +145,7 @@ class Post extends Component {
                 <Button title='Like' onPress={this.likePost}/>
                 <Button title='Dislike' onPress={this.dislikePost}/>
                 </>)}
-
+                </View>
             </View>
         ); 
     }

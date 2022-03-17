@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Button, TextInput, ColorPropType, ScrollView, FlatList, ActivityIndicator } from 'react-native';
+import { TouchableOpacity, Text, View, Button, TextInput, ColorPropType, ScrollView, FlatList, ActivityIndicator } from 'react-native';
 import React, { Component } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Profile from './Profile';
@@ -11,6 +11,8 @@ import PostsFeed from '../components/PostsFeed';
 import HomeConsumer from '../HomeConsumer';
 import Search from '../components/Search';
 import { useLayoutEffect } from 'react';
+import { styles } from '../styles/style';
+
 
 
 const clearAsyncStorage = async() => {
@@ -38,7 +40,9 @@ componentDidMount() {
     this.getUserPosts();
     this.props.navigation.setOptions({
         headerRight: () => (
-            <Button title='Logout' onPress={() => this.logout()}></Button>
+            <TouchableOpacity style={styles.buttonContainer} onPress={() => this.logout()}>
+                <Text>Logout</Text>
+            </TouchableOpacity>
           )
     });
 
@@ -98,15 +102,17 @@ render() {
     } else {
         return (
             
-        <ScrollView>
-            
+        <ScrollView >
+           
             <NewPost addedNewPost={this.state.addedNewPost}/>
             <PostsFeed listOfPosts={this.state.posts}/>
             <Button title='Logout' onPress={() => this.logout()}/>
+          
         </ScrollView>
         
         );
         }
 }
 }
+
 export default HomePage;

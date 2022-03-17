@@ -1,5 +1,5 @@
 
-import { StyleSheet, Text, View, Button, TextInput, StatusBar } from 'react-native';
+import { StyleSheet, Text, View, Button, TextInput, Image } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { Component, useContext } from 'react';
 import { loginContext } from '../loginContext';
@@ -79,12 +79,25 @@ class Login extends Component {
     render() {
         return (
             
-            <View>
-                <Text>Login</Text>
-                <TextInput placeholder="Email" onChangeText={this.handleEmailInput} value={this.state.email}/>
-                <TextInput placeholder="Password" onChangeText={this.handlePasswordInput} value={this.state.password} secureTextEntry={true}/>
-                <Button title="Login" onPress={() => this.login()}/>
-                <Button title="Sign Up" onPress={() => this.signUp()}/>
+            <View style={styles.container}>
+                <Image
+                    source={require('../assets/logo.png')}
+                    style={{
+                        width: 375,
+                        height: 175
+                        }}
+                />
+                <Text style={styles.text}>Login</Text>
+          
+                
+                <TextInput style={styles.inputField} placeholder="Email" onChangeText={this.handleEmailInput} value={this.state.email}/>
+                <TextInput style={styles.inputField} placeholder="Password" onChangeText={this.handlePasswordInput} value={this.state.password} secureTextEntry={true}/>
+                <View style={styles.buttonContainer}>
+                <Button color='#B22222' title="Login" onPress={() => this.login()}/>
+                </View>
+                <View style={styles.buttonContainer}>
+                <Button color='#B22222' title="Sign Up" onPress={() => this.signUp()}/>
+                </View>
             </View>
           
         );
@@ -92,4 +105,33 @@ class Login extends Component {
 
 }
 
+
+const styles = StyleSheet.create({
+    container: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: 20,
+        margin: 10
+      },
+      text: {
+        fontSize: 28,
+        marginBottom: 10,
+        color: '#051d5f',
+        padding: 5
+      },
+      inputField: {
+        padding: 10,
+        marginTop: 5,
+        marginBottom: 10,
+        width: 300,
+        height: 40,
+        fontSize: 16,
+        borderRadius: 8,
+        borderWidth: 1,
+      },
+      buttonContainer: {
+        color: '#B22222',
+        padding: 5
+      },
+  });
 export default Login;

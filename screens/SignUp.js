@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import {  Button, View, Text, TextInput, Alert } from 'react-native';
+import {  Button, View, Text, TextInput, Alert, TouchableOpacity } from 'react-native';
+import { styles } from '../styles/style';
+
 
 class SignUp extends Component {
     constructor(props) {
@@ -55,15 +57,18 @@ class SignUp extends Component {
    
     render() {
         return (
-            <View>
-                <Text>Sign Up</Text>
-                <TextInput placeholder='First Name' onChangeText={this.handleFirstNameInput} value={this.state.first_name}/>
-                <TextInput placeholder='Last Name' onChangeText={this.handleLastNameInput} value={this.state.last_name}/>
-                <TextInput placeholder='Email' onChangeText={this.handleEmailInput} value={this.state.email}/>
-                <TextInput placeholder='Password' onChangeText={this.handlePasswordInput} value={this.state.password} secureTextEntry={true}/>
-                <Button title="Sign Up" onPress={() => this.signUp()}/>
-                <Button title="Login" onPress={() => this.props.navigation.navigate("Login")}/>
-           
+            <View style={styles.container}>
+                <Text style={styles.text}>Sign Up</Text>
+                <TextInput style={styles.inputField} placeholder='First Name' onChangeText={this.handleFirstNameInput} value={this.state.first_name}/>
+                <TextInput style={styles.inputField} placeholder='Last Name' onChangeText={this.handleLastNameInput} value={this.state.last_name}/>
+                <TextInput style={styles.inputField} placeholder='Email' onChangeText={this.handleEmailInput} value={this.state.email}/>
+                <TextInput style={styles.inputField} placeholder='Password' onChangeText={this.handlePasswordInput} value={this.state.password} secureTextEntry={true}/>
+                <View style={styles.buttonContainer}>
+                <Button color='#B22222' title="Sign Up" onPress={() => this.signUp()}/>
+                </View>
+                <View style={styles.buttonContainer}>
+                <Button color='#B22222' title="Login" onPress={() => this.props.navigation.navigate("Login")}/>
+                </View>
             </View>
         );
 

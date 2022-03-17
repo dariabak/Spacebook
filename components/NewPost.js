@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { HomeContext } from '../HomeContext';
 import { loginContext } from '../loginContext';
+import { styles } from '../styles/style';
 
 
 class NewPost extends Component {
@@ -43,10 +44,12 @@ handlePostInput = (value) => {
 render() {
   
     return(
-        <View style={{padding: 20}}>
-            <Text style={{padding: 10}}>Add new post!</Text>
-            <TextInput style={{height: 100, backgroundColor: '#ececec', borderColor: '#232023' }} multiline={true} value={this.state.post} onChangeText={this.handlePostInput}></TextInput>
-            <Button title='Submit' onPress={() => this.addNewPost()}/>
+        <View style={{padding: 20, backgroundColor: '#ececec'}}>
+            <Text style={styles.newPostText}>New post</Text>
+            <TextInput style={styles.postField} multiline={true} value={this.state.post} onChangeText={this.handlePostInput}></TextInput>
+            <View style={styles.buttonContainer}>
+            <Button color='#B22222' title='Submit' onPress={() => this.addNewPost()}/>
+            </View>
         </View>
         );
     }

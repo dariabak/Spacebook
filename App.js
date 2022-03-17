@@ -1,6 +1,6 @@
 import 'react-native-gesture-handler';
 import React, { Component, useState}  from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { StyleSheet, Text, View, Button, Image } from 'react-native';
 import { NavigationContainer} from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Login from './screens/Login';
@@ -54,16 +54,10 @@ class App extends Component {
     return (
       <loginContext.Provider value={value}>
       <NavigationContainer>
-
-
-          <Stack.Navigator screenOptions={{
-            headerRight: () => (
-              <Button title='Logout' onPress={() => this.setAuth(logout)}></Button>
-            )
-          }}>      
          
           { this.state.isLoggedIn ? (
-          <><Stack.Screen name="HomeNavigator" component={HomeNavigator} 
+            <Stack.Navigator>    
+          <Stack.Screen name="HomeNavigator" component={HomeNavigator} 
             options={{
               headerShown: false
             }}/>
@@ -71,19 +65,30 @@ class App extends Component {
               <Stack.Screen name='Friends' component={Friends}/>
               <Stack.Screen name='EditProfile' component={EditProfile}/>
               <Stack.Screen name='FriendProfile' component={FriendProfile}/>
-              </>) 
+            </Stack.Navigator>) 
           : (
-          <>
+          <Stack.Navigator screenOptions={{
+            headerLeft: () => (
+              <View>
+              <Image source={require('./assets/logo.png')}
+                  style={{
+                      width: 60,
+                      height: 65
+                  }}/>
+                  </View>
+            ),
+            title: 'Spacebook'
+          }}>
            
           <Stack.Screen name="Login" component={Login} options={{ 
             headerRight: () => (
-              <Button title='Click it'></Button>
+              <View></View>
             )
           }}/>   
           <Stack.Screen name="SignUp" component={SignUp}/>   
-          </>)      
+          </Stack.Navigator>)      
           }
-          </Stack.Navigator>
+          
       </NavigationContainer>
       </loginContext.Provider>
     );

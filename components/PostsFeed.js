@@ -4,6 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Post from './Post';
 import { HomeContext } from '../HomeContext';
 import { loginContext } from '../loginContext';
+import { styles } from '../styles/style';
 
 
 class PostsFeed extends Component {
@@ -48,7 +49,8 @@ class PostsFeed extends Component {
             return (<View><Text>Loading...</Text></View>);
        }else{
         return (
-            <View>
+            <View style={{justifyContent: 'center',
+            alignItems: 'center'}}>
                 {this.state.listOfPosts.map(post => 
                     <Post key={post.id} post={{post}}/>
                  )}
