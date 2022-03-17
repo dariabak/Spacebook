@@ -12,11 +12,11 @@ class Post extends Component {
     constructor(props){
         super(props);
         this.state = {
-            isModalVisible: false  
+            isModalVisible: false,
+            numLikes: 0
         }
     }
     likePost = () => {
-        console.log(this.props.post.post.post_id);
         fetch('http://10.0.2.2:3333/api/1.0.0/user/'  + this.props.post.post.author.user_id + '/post/' + this.props.post.post.post_id + '/like', {
             method: 'POST',
             headers: {
@@ -24,16 +24,28 @@ class Post extends Component {
             }
         
         })
-        .then((response) => response.text())
+        .then((response) => {
+            if(response.status == 200){
+                let number = this.state.numLikes + 1;
+                this.setState({
+                    numLikes: number
+                });
+            }
+            console.log(response.status);
+            return response.text()
+        })
         .then((result) => {
             console.log(result);
+           
         })
         .catch((error) => {
             console.log(error);
         })
     }
     componentDidMount() {
-       
+       this.setState({
+            numLikes: this.props.post.post.numLikes
+       });
     }
     isItUserPost = () => {
         if(this.props.post.post.author.user_id == this.context.id) {
@@ -51,14 +63,34 @@ class Post extends Component {
             isModalVisible: isTrue
         });
     }
-    
+    dislikePost = () => {
+        fetch('http://10.0.2.2:3333/api/1.0.0/user/'  + this.props.post.post.author.user_id + '/post/' + this.props.post.post.post_id + '/like', {
+            method: 'DELETE',
+            headers: {
+                'X-Authorization': this.context.token
+            }
+        
+        })
+        .then((response) => {
+            console.log(response.status);
+            if(response.status == 200){
+                let number = this.state.numLikes - 1;
+                this.setState({
+                    numLikes: number
+                });
+            }
+        })
+        .catch((error) => {
+            console.log(error);
+        })
+    }
     render() {
         const data = this.props.post;
         return(
             <View style={{padding: 15, margin: 5, backgroundColor: '#ececec'}}>
                 <Text>{this.props.post.post.author.first_name} {this.props.post.post.author.last_name}</Text>
                 <Text>{this.props.post.post.text}</Text>
-                <Text>Likes: {this.props.post.post.numLikes}</Text>
+                <Text>Likes: {this.state.numLikes}</Text>
                 
                 <Text>{this.props.post.post.timestamp}</Text>
                 {this.isItUserPost() ? (
@@ -80,7 +112,8 @@ class Post extends Component {
                     </Modal>
                     </>
                 ) : (<>
-                <Button title='Like' onPress={this.likePost}></Button>
+                <Button title='Like' onPress={this.likePost}/>
+                <Button title='Dislike' onPress={this.dislikePost}/>
                 </>)}
 
             </View>

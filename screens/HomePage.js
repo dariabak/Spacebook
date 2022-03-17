@@ -10,6 +10,7 @@ import NewPost from '../components/NewPost';
 import PostsFeed from '../components/PostsFeed';
 import HomeConsumer from '../HomeConsumer';
 import Search from '../components/Search';
+import { useLayoutEffect } from 'react';
 
 
 const clearAsyncStorage = async() => {
@@ -18,6 +19,7 @@ const clearAsyncStorage = async() => {
 
 class HomePage extends Component {
     static contextType = loginContext;
+
 constructor(props) {
     super(props);
     this.state = {
@@ -34,11 +36,18 @@ componentDidMount() {
        login_data: this.context
    })
     this.getUserPosts();
+    this.props.navigation.setOptions({
+        headerRight: () => (
+            <Button title='Logout' onPress={() => this.logout()}></Button>
+          )
+    });
+
 }
 addedNewPost = () => {
     this.setState({isLoading: true});
 this.getUserPosts();
 }
+
 
 getUserPosts = () => {
     fetch('http://10.0.2.2:3333/api/1.0.0/user/' + this.context.id + '/post', {

@@ -46,6 +46,11 @@ class App extends Component {
       token: this.state.token,
       id: this.state.id
     }
+    const logout = {
+      isLoggedIn: false,
+      token: '',
+      id: 0
+    }
     return (
       <loginContext.Provider value={value}>
       <NavigationContainer>
@@ -53,14 +58,14 @@ class App extends Component {
 
           <Stack.Navigator screenOptions={{
             headerRight: () => (
-              <Button title='Click it'></Button>
+              <Button title='Logout' onPress={() => this.setAuth(logout)}></Button>
             )
           }}>      
          
           { this.state.isLoggedIn ? (
           <><Stack.Screen name="HomeNavigator" component={HomeNavigator} 
             options={{
-              headerShown: false,
+              headerShown: false
             }}/>
                
               <Stack.Screen name='Friends' component={Friends}/>

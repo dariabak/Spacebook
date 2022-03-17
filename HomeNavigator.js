@@ -12,8 +12,14 @@ const Tab = createBottomTabNavigator();
 
 function HomeNavigator(props) {
   return (
-    <Tab.Navigator>
-        <Tab.Screen name="Home" component={HomePage} />
+    <Tab.Navigator  screenOptions={{
+      headerRight: () => (
+        <Button title='Logout'></Button>
+      )
+    }}>
+        <Tab.Screen name="Home" component={HomePage} 
+       
+        />
         <Tab.Screen name="Profile" component={Profile} />
         <Tab.Screen name="Friend Requests" component={FriendRequests} />
 
