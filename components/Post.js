@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { HomeContext } from '../HomeContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { loginContext } from '../loginContext';
+import EditPost from './EditPost';
 
 
 class Post extends Component {
@@ -58,7 +59,7 @@ class Post extends Component {
                 <Text>{this.props.post.post.author.first_name} {this.props.post.post.author.last_name}</Text>
                 <Text>{this.props.post.post.text}</Text>
                 <Text>Likes: {this.props.post.post.numLikes}</Text>
-                <Button title='Like' onPress={this.likePost}></Button>
+                
                 <Text>{this.props.post.post.timestamp}</Text>
                 {this.isItUserPost() ? (
                     <>
@@ -70,17 +71,17 @@ class Post extends Component {
                         }}
                         >
                         <View>
-                            <Text>Yeey</Text>
-                            <Pressable
-                            onPress={() => this.setState({isModalVisible: false})}
-                            >
-                        <Text>Hide Modal</Text>
-                            </Pressable>
+                            <EditPost post_id={this.props.post.post.post_id}/>
+                            
+                                <Button title='Close' onPress={() => this.setState({isModalVisible: false})}></Button>
+                          
            
                         </View>
                     </Modal>
                     </>
-                ) : (<></>)}
+                ) : (<>
+                <Button title='Like' onPress={this.likePost}></Button>
+                </>)}
 
             </View>
         ); 

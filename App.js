@@ -51,7 +51,11 @@ class App extends Component {
       <NavigationContainer>
 
 
-          <Stack.Navigator>      
+          <Stack.Navigator screenOptions={{
+            headerRight: () => (
+              <Button title='Click it'></Button>
+            )
+          }}>      
          
           { this.state.isLoggedIn ? (
           <><Stack.Screen name="HomeNavigator" component={HomeNavigator} 
