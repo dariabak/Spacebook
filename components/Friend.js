@@ -2,6 +2,7 @@ import { Image, Text, View, Button, TextInput, FlatList, ActivityIndicator, Inpu
 import React, { Component } from 'react';
 import * as FileSystem from 'expo-file-system';
 import { loginContext } from '../loginContext';
+import uuid from 'react-native-uuid';
 
 class Friend extends Component {
     static contextType = loginContext;
@@ -13,10 +14,9 @@ class Friend extends Component {
     }
 
     getUserPhoto = async () => {
-        await FileSystem.deleteAsync(FileSystem.documentDirectory + this.props.friend.user_id);
-        FileSystem.downloadAsync(
+         FileSystem.downloadAsync(
             'http://10.0.2.2:3333/api/1.0.0/user/' + this.props.friend.user_id + '/photo',
-            FileSystem.documentDirectory + this.props.friend.user_id,
+            FileSystem.cacheDirectory + uuid.v4(),
             {headers: {"X-Authorization": this.context.token}})
             .then(({uri}) => {
                 this.setState({friend_photo: uri})

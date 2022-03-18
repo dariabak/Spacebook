@@ -4,7 +4,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Constants from 'expo-constants';
 import * as FileSystem from 'expo-file-system';
 import { loginContext } from "../loginContext";
-import {launchCamera, launchImageLibrary} from 'react-native-image-picker'; 
 import * as ImagePicker from 'expo-image-picker';
 import uuid from 'react-native-uuid';
 

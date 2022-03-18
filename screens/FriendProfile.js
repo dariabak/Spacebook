@@ -17,7 +17,8 @@ class FriendProfile extends Component {
             user_data: {},
             user_photo: null,
             isLoading: true,
-            posts: []
+            posts: [],
+            isFriend: false
         }
     }
 
@@ -48,7 +49,15 @@ class FriendProfile extends Component {
                 'X-Authorization': this.context.token
             }
         })
-        .then((response) => response.json())
+        .then((response) => {
+            
+            if(response.status == 200){
+                this.setState({
+                    isFriend:  true
+                });
+                return response.json();
+            } 
+        })
         .then((json) => {
             console.log(json);
             this.setState({posts: json, isLoading: false}); 
@@ -74,6 +83,18 @@ class FriendProfile extends Component {
             this.getFriendPosts();
     
     }
+    sendFriendRequest = () => {
+        fetch('http://10.0.2.2:3333/api/1.0.0/user/' + this.props.user.user_id + '/friends' , {
+            method: 'POST',    
+            headers: {
+                    'X-Authorization': this.context.token
+                }
+            })
+            .then((response) => console.log(response.status))
+            .catch((error) => {
+                console.log(error);
+            })
+    }
 
     render() {
         if(this.state.isLoading){
@@ -95,10 +116,20 @@ class FriendProfile extends Component {
                         }}
                     />
                     <View style={{margin: 10}}>
-                <Text style={styles.userName}>{this.state.user_data.first_name} {this.state.user_data.last_name} </Text>
+                        <Text style={styles.userName}>{this.state.user_data.first_name} {this.state.user_data.last_name} </Text>
                     <Text style={{fontSize: 18, marginLeft: 5}}>Friends: {this.state.user_data.friend_count}</Text>
-                    </View>
+                    </View> 
+                    {
+                    this.state.isFriend ? 
+                    (<>
+                    
                     <PostsFeed listOfPosts={this.state.posts}/>
+                    </>) :
+                      ( <View style={{color: '#B22222', padding: 6}}>
+                        <Button color='#B22222' title='Send request' onPress={() => this.sendFriendRequest()}/>
+                        </View>) 
+                    }
+                    
             </ScrollView>
         );
         }

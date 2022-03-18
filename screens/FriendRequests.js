@@ -117,7 +117,7 @@ searchFriends = () => {
                  )}
                 <FlatList data={this.state.search_data}
             renderItem={({item}) => (
-                <UserItem key={item.user_id} user={item} navigation={this.props.navigation}></UserItem>
+                <UserItem navigation={this.props.navigation} key={item.user_id} user={item} navigation={this.props.navigation}></UserItem>
         
             )}
             keyExtractor={item => item.email}
