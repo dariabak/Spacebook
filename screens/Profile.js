@@ -6,6 +6,7 @@ import * as FileSystem from 'expo-file-system';
 import { loginContext } from "../loginContext";
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker'; 
 import * as ImagePicker from 'expo-image-picker';
+import uuid from 'react-native-uuid';
 
 class Profile extends Component {
 static contextType = loginContext;
@@ -39,10 +40,10 @@ static contextType = loginContext;
         })
     }
     getUserPhoto = async() => {
-        await FileSystem.deleteAsync(FileSystem.documentDirectory + 'profilePicture')
+       
         FileSystem.downloadAsync(
             'http://10.0.2.2:3333/api/1.0.0/user/' + this.context.id + '/photo',
-            FileSystem.documentDirectory + 'profilePicture',
+            FileSystem.documentDirectory + uuid.v4(),
             {headers: {"X-Authorization": this.context.token}})
             .then(({uri}) => {
                 this.setState({user_photo: uri})
@@ -50,8 +51,6 @@ static contextType = loginContext;
           
     }
     componentDidMount() {
-    
-           
             this.getUserPhoto();
             this.getUserDetails();
         
@@ -108,6 +107,17 @@ static contextType = loginContext;
             console.log(error);
         })
     }
+    uploadPhotoFromGallery = async () => {
+        let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
+            quality: 1
+        });
+        console.log(result.uri);
+        const image = await fetch(result.uri);
+        const blob = await image.blob();
+
+        await this.uploadImage(blob);
+    }
 
     render() {
         const url = 'http://10.0.2.2:3333/api/1.0.0/user/' + this.context.id + '/photo';
@@ -143,6 +153,9 @@ static contextType = loginContext;
                     </View>
                     <View style={styles.editProfileButtonContainer}>
                     <Button color='#B22222' title='Friends' onPress={() => this.props.navigation.navigate('Friends')}/>
+                    </View>
+                    <View style={styles.editProfileButtonContainer}>
+                    <Button color='#B22222' title='Upload photo from gallery' onPress={() => this.uploadPhotoFromGallery()}/>
                     </View>
                 </ScrollView>
             );

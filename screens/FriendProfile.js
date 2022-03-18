@@ -5,6 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as FileSystem from 'expo-file-system';
 import PostsFeed from "../components/PostsFeed";
 import { loginContext } from "../loginContext";
+import uuid from 'react-native-uuid';
 
 
 
@@ -56,10 +57,11 @@ class FriendProfile extends Component {
             console.log(error);
         })
     }
-    getFriendPhoto = () => {
+    getFriendPhoto = async () => {
+        
         FileSystem.downloadAsync(
             'http://10.0.2.2:3333/api/1.0.0/user/' + this.props.route.params.friend.user_id + '/photo',
-            FileSystem.documentDirectory + 'friendProfilePicture',
+            FileSystem.documentDirectory + uuid.v4(),
             {headers: {"X-Authorization": this.context.token}})
             .then(({uri}) => {
                 this.setState({user_photo: uri})

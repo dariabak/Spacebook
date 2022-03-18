@@ -106,7 +106,7 @@ render() {
            
             <NewPost addedNewPost={this.state.addedNewPost}/>
             <PostsFeed listOfPosts={this.state.posts}/>
-            <Button title='Logout' onPress={() => this.logout()}/>
+          
           
         </ScrollView>
         

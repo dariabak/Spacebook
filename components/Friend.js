@@ -12,10 +12,11 @@ class Friend extends Component {
         }
     }
 
-    getUserPhoto = () => {
+    getUserPhoto = async () => {
+        await FileSystem.deleteAsync(FileSystem.documentDirectory + this.props.friend.user_id);
         FileSystem.downloadAsync(
             'http://10.0.2.2:3333/api/1.0.0/user/' + this.props.friend.user_id + '/photo',
-            FileSystem.documentDirectory + 'friendPicture',
+            FileSystem.documentDirectory + this.props.friend.user_id,
             {headers: {"X-Authorization": this.context.token}})
             .then(({uri}) => {
                 this.setState({friend_photo: uri})

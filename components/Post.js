@@ -7,6 +7,7 @@ import EditPost from './EditPost';
 import { styles } from '../styles/style';
 import * as FileSystem from 'expo-file-system';
 import Icon from 'react-native-vector-icons/MaterialIcons'; 
+import uuid from 'react-native-uuid';
 
 
 class Post extends Component {
@@ -68,10 +69,10 @@ class Post extends Component {
             isModalVisible: isTrue
         });
     }
-    getUserImage = () => {
+    getUserImage = async () => {
         FileSystem.downloadAsync(
             'http://10.0.2.2:3333/api/1.0.0/user/' + this.props.post.post.author.user_id + '/photo',
-            FileSystem.documentDirectory + 'profilePicture',
+            FileSystem.cacheDirectory + uuid.v4(),
             {headers: {"X-Authorization": this.context.token}})
             .then(({uri}) => {
                 this.setState({user_photo: uri})
