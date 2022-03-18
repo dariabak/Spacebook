@@ -16,7 +16,7 @@ const storeData = async (value) => {
 }
 
 const clearAsyncStorage = async () => {
-    AsyncStorage.clear();
+    //AsyncStorage.clear();
 }
 
 

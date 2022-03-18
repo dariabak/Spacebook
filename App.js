@@ -11,6 +11,7 @@ import Friends from './screens/Friends';
 import EditProfile from './screens/EditProfile';
 import FriendProfile from './screens/FriendProfile';
 import FriendSearch from './screens/FriendSearch';
+import Drafts from './screens/Drafts';
 
 
 const Stack = createNativeStackNavigator();
@@ -63,6 +64,7 @@ class App extends Component {
               <Stack.Screen name='EditProfile' component={EditProfile} />
               <Stack.Screen name='FriendProfile' component={FriendProfile} />
               <Stack.Screen name='FriendSearch' component={FriendSearch} />
+              <Stack.Screen name='Drafts' component={Drafts}/>
             </Stack.Navigator>)
             : (
               <Stack.Navigator screenOptions={{

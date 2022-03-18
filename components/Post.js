@@ -132,12 +132,10 @@ class Post extends Component {
                                     this.setState({ isModalVisible: false });
                                 }}
                             >
-                                <View>
+                                <View style={{flex: 1}}>
                                     <EditPost post_id={this.props.post.post.post_id} />
 
                                     <Button color='#B22222' title='Close' onPress={() => this.setState({ isModalVisible: false })}></Button>
-
-
                                 </View>
                             </Modal>
                         </>
@@ -145,8 +143,6 @@ class Post extends Component {
                         <View style={{ flexDirection: 'row' }}>
                             <TouchableOpacity style={styles.likeButton} onPress={this.likePost}>
                                 <Icon name='thumb-up' size={20} color='#ffffff' />
-
-                                {/* <Text style={{color: '#ffffff'}}>Like</Text> */}
                             </TouchableOpacity>
                             <TouchableOpacity style={styles.likeButton} onPress={this.dislikePost}>
                                 <Icon name='thumb-down' size={20} color='#ffffff' />

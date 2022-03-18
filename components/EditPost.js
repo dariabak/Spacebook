@@ -1,6 +1,7 @@
-import { StyleSheet, Text, View, Button, TextInput, ColorPropType, Modal } from 'react-native';
+import { StyleSheet, Text, View, Button, TextInput } from 'react-native';
 import React, { Component } from 'react';
 import { LoginContext } from '../LoginContext';
+import { styles } from '../styles/style';
 
 
 class EditPost extends Component {
@@ -65,12 +66,14 @@ class EditPost extends Component {
             );
         } else {
             return (
-                <View>
-                    <Text>Date:</Text>
-                    <Text> {this.state.post.timestamp}</Text>
-                    <Text>Post:</Text>
-                    <TextInput placeholder={this.state.post.text} value={this.state.new_text} onChangeText={text => this.setState({ new_text: text })} />
-                    <Button title='Update post' onPress={() => this.editPost()} />
+                <View >
+                    <View style={{ padding: 5, margin: 5 }}>
+                        <Text style={{ fontSize: 20, marginBottom: 5 }}>Date:</Text>
+                        <Text> {this.state.post.timestamp}</Text>
+                        <Text style={{fontSize: 20, marginTop: 5}}>Post:</Text>
+                        <TextInput style={styles.postField} placeholder={this.state.post.text} value={this.state.new_text} onChangeText={text => this.setState({ new_text: text })} />
+                        <Button color='#B22222' title='Update post' onPress={() => this.editPost()} />
+                    </View>
                 </View>
             );
         }

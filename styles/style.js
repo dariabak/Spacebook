@@ -26,7 +26,7 @@ export const styles = StyleSheet.create({
       },
       buttonContainer: {
         color: '#B22222',
-        padding: 15
+        padding: 10
       },
       postField: {
         padding: 10,

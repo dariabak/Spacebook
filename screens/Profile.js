@@ -145,13 +145,16 @@ class Profile extends Component {
                         <Text style={styles.friendText}>Friends: {this.state.user_data.friend_count}</Text>
                     </View>
                     <View style={styles.editProfileButtonContainer}>
-                        <Button marginBottom={12} color='#B22222' title='Change profile photo' onPress={() => this.uploadProfilePicture()} />
+                        <Button color='#B22222' title='Friends' onPress={() => this.props.navigation.navigate('Friends')} />
                     </View>
                     <View style={styles.editProfileButtonContainer}>
                         <Button color='#B22222' title='Edit profile' onPress={() => this.props.navigation.navigate('EditProfile', { onGoBack: () => this.getUserDetails() })} />
                     </View>
                     <View style={styles.editProfileButtonContainer}>
-                        <Button color='#B22222' title='Friends' onPress={() => this.props.navigation.navigate('Friends')} />
+                        <Button color='#B22222' title='Drafts' onPress={() => this.props.navigation.navigate('Drafts')}/>
+                    </View>
+                    <View style={styles.editProfileButtonContainer}>
+                        <Button marginBottom={12} color='#B22222' title='Change profile photo' onPress={() => this.uploadProfilePicture()} />
                     </View>
                     <View style={styles.editProfileButtonContainer}>
                         <Button color='#B22222' title='Upload photo from gallery' onPress={() => this.uploadPhotoFromGallery()} />
