@@ -43,8 +43,8 @@ class Drafts extends Component {
             });
         });
     }
+    
     deleteDraft = (id) => {
-
         let newDrafts = [];
         this.state.drafts.forEach((draft) => {
             if (draft.id != id) {
