@@ -2,8 +2,7 @@ import { StyleSheet, Text, View, Button, TextInput, ColorPropType } from 'react-
 import React, { Component } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Post from './Post';
-import { HomeContext } from '../HomeContext';
-import { loginContext } from '../loginContext';
+import { LoginContext } from '../LoginContext';
 import { styles } from '../styles/style';
 
 
@@ -14,49 +13,34 @@ class PostsFeed extends Component {
             listOfPosts: [],
             isLoading: true
         };
-        
+
     }
 
-    
-    // getUserPosts = () => {
-    //     fetch('http://10.0.2.2:3333/api/1.0.0/user/' + this.state.login_data.id + '/post', {
-    //         method: 'GET',    
-    //         headers: {
-    //                 'X-Authorization': this.state.login_data.token
-    //             }
-    //         })
-    //         .then((response) => response.json())
-    //         .then((json) => {
-    //             this.setState({listOfPosts: json}); 
-
-    //         })
-    //         .catch((error) => {
-    //             console.log(error);
-    //         })
-    // }
     componentDidMount() {
-    
-            this.setState({
-                listOfPosts: this.props.listOfPosts,
-                isLoading: false
-            });
-     
+
+        this.setState({
+            listOfPosts: this.props.listOfPosts,
+            isLoading: false
+        });
+
     }
 
     render() {
 
-       if(this.state.isLoading){
+        if (this.state.isLoading) {
             return (<View><Text>Loading...</Text></View>);
-       }else{
-        return (
-            <View style={{justifyContent: 'center',
-            alignItems: 'center'}}>
-                {this.state.listOfPosts.map(post => 
-                    <Post key={post.post_id} post={{post}}/>
-                 )}
-            </View>
-        );
-                }
+        } else {
+            return (
+                <View style={{
+                    justifyContent: 'center',
+                    alignItems: 'center'
+                }}>
+                    {this.state.listOfPosts.map(post =>
+                        <Post key={post.post_id} post={{ post }} />
+                    )}
+                </View>
+            );
+        }
     }
 }
 

@@ -1,6 +1,6 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { StyleSheet, Text, View, Button, Settings, Image } from 'react-native';
-import {loginContext} from './loginContext';
+import {LoginContext} from './LoginContext';
 import Icon from 'react-native-vector-icons/MaterialIcons'; 
 import Profile from './screens/Profile';
 import HomePage from './screens/HomePage';

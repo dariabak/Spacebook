@@ -1,14 +1,14 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet, Image, ScrollView, Button, PermissionsAndroid} from "react-native";
+import { View, Text, StyleSheet, Image, ScrollView, Button, PermissionsAndroid } from "react-native";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Constants from 'expo-constants';
 import * as FileSystem from 'expo-file-system';
-import { loginContext } from "../loginContext";
+import { LoginContext } from "../LoginContext";
 import * as ImagePicker from 'expo-image-picker';
 import uuid from 'react-native-uuid';
 
 class Profile extends Component {
-static contextType = loginContext;
+    static contextType = LoginContext;
     constructor(props) {
         super(props);
         this.state = {
@@ -19,63 +19,63 @@ static contextType = loginContext;
     }
 
     getUserDetails = () => {
-        fetch('http://10.0.2.2:3333/api/1.0.0/user/'  + this.context.id, {
+        fetch('http://10.0.2.2:3333/api/1.0.0/user/' + this.context.id, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
                 'X-Authorization': this.context.token
             }
         })
-        .then((response) => response.json())
-        .then((json) => {
-            this.setState ({
-                user_data: json,
-                isLoading: false
-            });
+            .then((response) => response.json())
+            .then((json) => {
+                this.setState({
+                    user_data: json,
+                    isLoading: false
+                });
 
-        })
-        .catch((error) => {
-            console.log(error);
-        })
+            })
+            .catch((error) => {
+                console.log(error);
+            })
     }
-    getUserPhoto = async() => {
-       
+    getUserPhoto = async () => {
+
         FileSystem.downloadAsync(
             'http://10.0.2.2:3333/api/1.0.0/user/' + this.context.id + '/photo',
             FileSystem.documentDirectory + uuid.v4(),
-            {headers: {"X-Authorization": this.context.token}})
-            .then(({uri}) => {
-                this.setState({user_photo: uri})
+            { headers: { "X-Authorization": this.context.token } })
+            .then(({ uri }) => {
+                this.setState({ user_photo: uri })
             })
-          
+
     }
     componentDidMount() {
-            this.getUserPhoto();
-            this.getUserDetails();
-        
+        this.getUserPhoto();
+        this.getUserDetails();
+
     }
-    
+
     requestCameraPermission = async () => {
         try {
-          const granted = await PermissionsAndroid.request(
-            PermissionsAndroid.PERMISSIONS.CAMERA,
-            {
-              title: "App Camera Permission",
-              message:"App needs access to your camera ",
-              buttonNeutral: "Ask Me Later",
-              buttonNegative: "Cancel",
-              buttonPositive: "OK"
+            const granted = await PermissionsAndroid.request(
+                PermissionsAndroid.PERMISSIONS.CAMERA,
+                {
+                    title: "App Camera Permission",
+                    message: "App needs access to your camera ",
+                    buttonNeutral: "Ask Me Later",
+                    buttonNegative: "Cancel",
+                    buttonPositive: "OK"
+                }
+            );
+            if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+                console.log("Camera permission given");
+            } else {
+                console.log("Camera permission denied");
             }
-          );
-          if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-            console.log("Camera permission given");
-          } else {
-            console.log("Camera permission denied");
-          }
         } catch (err) {
-          console.warn(err);
+            console.warn(err);
         }
-      };
+    };
 
 
     uploadProfilePicture = async () => {
@@ -84,27 +84,27 @@ static contextType = loginContext;
             mediaTypes: ImagePicker.MediaTypeOptions.All,
             quality: 1,
             base64: true
-          });
-          const image = await fetch(result.uri);
-          const blob = await image.blob();
-          
-          await this.uploadImage(blob);
+        });
+        const image = await fetch(result.uri);
+        const blob = await image.blob();
+
+        await this.uploadImage(blob);
     }
 
     uploadImage = async (blob) => {
-        fetch('http://10.0.2.2:3333/api/1.0.0/user/' + this.context.id + '/photo' , {
-        method: 'POST', 
-        body: blob,   
-        headers: {
+        fetch('http://10.0.2.2:3333/api/1.0.0/user/' + this.context.id + '/photo', {
+            method: 'POST',
+            body: blob,
+            headers: {
                 'Content-Type': 'image/jpeg',
                 'X-Authorization': this.context.token
             }
         })
-        .then((response) => response.text())
-        .then((json) => console.log(json))
-        .catch((error) => {
-            console.log(error);
-        })
+            .then((response) => response.text())
+            .then((json) => console.log(json))
+            .catch((error) => {
+                console.log(error);
+            })
     }
     uploadPhotoFromGallery = async () => {
         let result = await ImagePicker.launchImageLibraryAsync({
@@ -120,41 +120,41 @@ static contextType = loginContext;
 
     render() {
         const url = 'http://10.0.2.2:3333/api/1.0.0/user/' + this.context.id + '/photo';
-        if(this.state.isLoading){
-        return(
-            <View>
-                <Text>Loading...</Text>
-            </View>
-        );
+        if (this.state.isLoading) {
+            return (
+                <View>
+                    <Text>Loading...</Text>
+                </View>
+            );
         } else {
             return (
                 <ScrollView>
-                      <Image
+                    <Image
                         source={{
-                        uri: this.state.user_photo,
+                            uri: this.state.user_photo,
                         }}
                         style={{
-                        width: 400,
-                        height: 400,
-                        borderWidth: 5,
-                        borderRadius: 200
+                            width: 400,
+                            height: 400,
+                            borderWidth: 5,
+                            borderRadius: 200
                         }}
                     />
                     <View style={styles.userDataContainer}>
-                    <Text style={styles.userName}>{this.state.user_data.first_name} {this.state.user_data.last_name}</Text>
-                    <Text style={styles.friendText}>Friends: {this.state.user_data.friend_count}</Text>
+                        <Text style={styles.userName}>{this.state.user_data.first_name} {this.state.user_data.last_name}</Text>
+                        <Text style={styles.friendText}>Friends: {this.state.user_data.friend_count}</Text>
                     </View>
                     <View style={styles.editProfileButtonContainer}>
-                    <Button marginBottom={12} color='#B22222' title='Change profile photo' onPress={() => this.uploadProfilePicture()}/>
+                        <Button marginBottom={12} color='#B22222' title='Change profile photo' onPress={() => this.uploadProfilePicture()} />
                     </View>
                     <View style={styles.editProfileButtonContainer}>
-                    <Button color='#B22222' title='Edit profile' onPress={() => this.props.navigation.navigate('EditProfile', { onGoBack: () => this.getUserDetails()})}/>
+                        <Button color='#B22222' title='Edit profile' onPress={() => this.props.navigation.navigate('EditProfile', { onGoBack: () => this.getUserDetails() })} />
                     </View>
                     <View style={styles.editProfileButtonContainer}>
-                    <Button color='#B22222' title='Friends' onPress={() => this.props.navigation.navigate('Friends')}/>
+                        <Button color='#B22222' title='Friends' onPress={() => this.props.navigation.navigate('Friends')} />
                     </View>
                     <View style={styles.editProfileButtonContainer}>
-                    <Button color='#B22222' title='Upload photo from gallery' onPress={() => this.uploadPhotoFromGallery()}/>
+                        <Button color='#B22222' title='Upload photo from gallery' onPress={() => this.uploadPhotoFromGallery()} />
                     </View>
                 </ScrollView>
             );
@@ -162,7 +162,7 @@ static contextType = loginContext;
     }
 }
 
-  const styles = StyleSheet.create({
+const styles = StyleSheet.create({
     userName: {
         fontSize: 22,
         fontWeight: '200',
@@ -171,17 +171,17 @@ static contextType = loginContext;
         borderWidth: 1,
         borderRadius: 10,
         padding: 10
-      },
-      editProfileButtonContainer: {
-          color: '#B22222',
-          padding: 6
-      },
-      userDataContainer: {
-          margin: 10
-      },
-      friendText: {
+    },
+    editProfileButtonContainer: {
+        color: '#B22222',
+        padding: 6
+    },
+    userDataContainer: {
+        margin: 10
+    },
+    friendText: {
         fontSize: 18,
         margin: 5
-      }
-  });
+    }
+});
 export default Profile;

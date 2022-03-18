@@ -1,12 +1,12 @@
 import { StyleSheet, Text, View, Button, TextInput, FlatList, ActivityIndicator, Input } from 'react-native';
 import React, { Component } from 'react';
-import { loginContext } from '../loginContext';
+import { LoginContext } from '../LoginContext';
 import { SearchBar, ListItem } from 'react-native-elements';
 import UserItem from '../components/UserItem';
 
 
 class FriendSearch extends Component {
-    static contextType = loginContext;
+    static contextType = LoginContext;
     constructor(props) {
         super(props);
         this.state = {
@@ -15,7 +15,6 @@ class FriendSearch extends Component {
             search_data: ''
         }
     }
-
 
     renderSeparator = () => {
         return (
@@ -52,7 +51,6 @@ class FriendSearch extends Component {
         this.setState({ search: value });
         this.searchFriends();
     }
-
 
     render() {
         return (

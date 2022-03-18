@@ -2,7 +2,7 @@
 import { StyleSheet, Text, View, Button, TextInput, Image } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { Component, useContext } from 'react';
-import { loginContext } from '../loginContext';
+import { LoginContext } from '../LoginContext';
 import Topbar from '../components/Topbar';
 
 
@@ -15,41 +15,40 @@ const storeData = async (value) => {
     }
 }
 
-const clearAsyncStorage = async() => {
+const clearAsyncStorage = async () => {
     AsyncStorage.clear();
 }
 
 
 class Login extends Component {
-    static contextType = loginContext;
+    static contextType = LoginContext;
     constructor(props) {
         super(props);
         this.state = {
             email: 'daria@gmail.com',
-            password:'123456'
+            password: '123456'
         }
-        
-        
+
+
     }
 
-    componentDidMount()
-    {
-   
-    }    
+    componentDidMount() {
+
+    }
     handleEmailInput = (email) => {
-        this.setState({email: email})
+        this.setState({ email: email })
     }
 
     handlePasswordInput = (pass) => {
-        this.setState({password: pass})
+        this.setState({ password: pass })
     }
 
     signUp = () => {
-        
+
         this.props.navigation.navigate("SignUp");
     }
     login = () => {
-        fetch( 'http://10.0.2.2:3333/api/1.0.0/login/', {
+        fetch('http://10.0.2.2:3333/api/1.0.0/login/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -59,47 +58,47 @@ class Login extends Component {
                 password: this.state.password
             })
         })
-        .then((response) => response.json())
-        .then((json) => {
-            this.state.isLoggedIn = true;
-            const value = {
-                isLoggedIn: true,
-                token: json.token,
-                id: json.id
-            }
-            storeData(json);
-            this.context.setAuth(value);
+            .then((response) => response.json())
+            .then((json) => {
+                this.state.isLoggedIn = true;
+                const value = {
+                    isLoggedIn: true,
+                    token: json.token,
+                    id: json.id
+                }
+                storeData(json);
+                this.context.setAuth(value);
             })
-        .catch((error) => {
-            clearAsyncStorage();
-            console.log(error);
-        })
+            .catch((error) => {
+                clearAsyncStorage();
+                console.log(error);
+            })
     }
 
     render() {
         return (
-            
+
             <View style={styles.container}>
                 <Image
                     source={require('../assets/logo.png')}
                     style={{
                         width: 375,
                         height: 175
-                        }}
+                    }}
                 />
                 <Text style={styles.text}>Login</Text>
-          
-                
-                <TextInput style={styles.inputField} placeholder="Email" onChangeText={this.handleEmailInput} value={this.state.email}/>
-                <TextInput style={styles.inputField} placeholder="Password" onChangeText={this.handlePasswordInput} value={this.state.password} secureTextEntry={true}/>
+
+
+                <TextInput style={styles.inputField} placeholder="Email" onChangeText={this.handleEmailInput} value={this.state.email} />
+                <TextInput style={styles.inputField} placeholder="Password" onChangeText={this.handlePasswordInput} value={this.state.password} secureTextEntry={true} />
                 <View style={styles.buttonContainer}>
-                <Button color='#B22222' title="Login" onPress={() => this.login()}/>
+                    <Button color='#B22222' title="Login" onPress={() => this.login()} />
                 </View>
                 <View style={styles.buttonContainer}>
-                <Button color='#B22222' title="Sign Up" onPress={() => this.signUp()}/>
+                    <Button color='#B22222' title="Sign Up" onPress={() => this.signUp()} />
                 </View>
             </View>
-          
+
         );
     }
 
@@ -112,14 +111,14 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         padding: 20,
         margin: 10
-      },
-      text: {
+    },
+    text: {
         fontSize: 28,
         marginBottom: 10,
         color: '#051d5f',
         padding: 5
-      },
-      inputField: {
+    },
+    inputField: {
         padding: 10,
         marginTop: 5,
         marginBottom: 10,
@@ -128,10 +127,10 @@ const styles = StyleSheet.create({
         fontSize: 16,
         borderRadius: 8,
         borderWidth: 1,
-      },
-      buttonContainer: {
+    },
+    buttonContainer: {
         color: '#B22222',
         padding: 5
-      },
-  });
+    },
+});
 export default Login;

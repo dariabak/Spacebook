@@ -6,13 +6,10 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Login from './screens/Login';
 import SignUp from './screens/SignUp';
 import HomeNavigator from './HomeNavigator';
-import { loginContext } from './loginContext';
-import { SearchBar } from 'react-native-elements';
+import { LoginContext } from './LoginContext';
 import Friends from './screens/Friends';
 import EditProfile from './screens/EditProfile';
 import FriendProfile from './screens/FriendProfile';
-import Friend from './components/Friend';
-import Settings from './screens/Settings';
 import FriendSearch from './screens/FriendSearch';
 
 
@@ -52,7 +49,7 @@ class App extends Component {
       id: 0
     }
     return (
-      <loginContext.Provider value={value}>
+      <LoginContext.Provider value={value}>
         <NavigationContainer>
 
           {this.state.isLoggedIn ? (
@@ -91,7 +88,7 @@ class App extends Component {
           }
 
         </NavigationContainer>
-      </loginContext.Provider>
+      </LoginContext.Provider>
     );
 
   }

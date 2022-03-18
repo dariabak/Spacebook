@@ -1,6 +1,6 @@
-import React, { Component}  from 'react';
+import React, { Component } from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
-import { NavigationContainer} from '@react-navigation/native';
+import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import Login from '../screens/Login';
@@ -11,22 +11,22 @@ const Stack = createNativeStackNavigator();
 
 const StackNavigator = () => {
 
-    return (     
+    return (
         <Stack.Navigator>
-            
-            <Stack.Screen name="Login" component={Login}/>
-            <Stack.Screen name="SignUp" component={SignUp}/>
-        </Stack.Navigator>     
+
+            <Stack.Screen name="Login" component={Login} />
+            <Stack.Screen name="SignUp" component={SignUp} />
+        </Stack.Navigator>
     );
 }
-const  MainNavigator = () => {
+const MainNavigator = () => {
 
     return (
-        isLoggedIn ? <Stack.Navigator> 
-            <Stack.Screen name="HomePage" component={HomePage}/></Stack.Navigator> : 
-            <StackNavigator/>
+        isLoggedIn ? <Stack.Navigator>
+            <Stack.Screen name="HomePage" component={HomePage} /></Stack.Navigator> :
+            <StackNavigator />
 
     );
-    
-  }
- export default MainNavigator;
+
+}
+export default MainNavigator;
