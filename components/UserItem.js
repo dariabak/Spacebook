@@ -27,8 +27,7 @@ sendFriendRequest = () => {
 render() {
     return(
         <View style={{padding: 5, margin: 5}}>
-            <Text>{this.props.user.user_givenname}</Text>
-            <Text>{this.props.user.user_familyname}</Text>
+            <Text>{this.props.user.user_givenname} {this.props.user.user_familyname}</Text>
             <Button title='Send friend request' onPress={this.sendFriendRequest}/>
             <Button title='See profile' onPress={() => this.props.navigation.navigate('FriendProfile')}/>
         </View>

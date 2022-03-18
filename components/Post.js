@@ -6,6 +6,7 @@ import { loginContext } from '../loginContext';
 import EditPost from './EditPost';
 import { styles } from '../styles/style';
 import * as FileSystem from 'expo-file-system';
+import Icon from 'react-native-vector-icons/MaterialIcons'; 
 
 
 class Post extends Component {
@@ -142,8 +143,16 @@ class Post extends Component {
                     </Modal>
                     </>
                 ) : (<>
-                <Button title='Like' onPress={this.likePost}/>
-                <Button title='Dislike' onPress={this.dislikePost}/>
+                <View style={{flexDirection: 'row'}}>
+                <TouchableOpacity style={styles.likeButton} onPress={this.likePost}>
+                    <Icon name='thumb-up' size={20} color='#ffffff'/>
+                   
+                    {/* <Text style={{color: '#ffffff'}}>Like</Text> */}
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.likeButton} onPress={this.dislikePost}>
+                <Icon name='thumb-down' size={20} color='#ffffff'/>
+                </TouchableOpacity>
+                </View>
                 </>)}
                 </View>
             </View>

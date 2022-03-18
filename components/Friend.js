@@ -27,7 +27,7 @@ class Friend extends Component {
     }
     render() {
         return(
-            <View>
+            <View style={{margin: 10, justifyContent: 'center', alignItems: 'center'}}>
                 <Image
                         source={{
                         uri: this.state.friend_photo,
@@ -35,12 +35,14 @@ class Friend extends Component {
                         style={{
                         width: 100,
                         height: 100,
-                        borderWidth: 5 
+                        borderWidth: 5,
+                        borderRadius: 10
+
                         }}
                     />
                 <Text>{this.props.friend.user_givenname}</Text>
                 <Text>{this.props.friend.user_familyname}</Text>
-                <Button title='See profile' onPress={() => this.props.navigation.navigate('FriendProfile', {friend: this.props.friend})}/>
+                <Button color='#B22222' title='See profile' onPress={() => this.props.navigation.navigate('FriendProfile', {friend: this.props.friend})}/>
             </View>
         );
     }

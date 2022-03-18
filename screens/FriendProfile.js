@@ -86,19 +86,33 @@ class FriendProfile extends Component {
                         uri: this.state.user_photo,
                         }}
                         style={{
-                        width: 400,
-                        height: 300,
-                        borderWidth: 5 
+                            width: 400,
+                            height: 400,
+                            borderWidth: 5,
+                            borderRadius: 200
                         }}
                     />
-                <Text>First name: {this.state.user_data.first_name} </Text>
-                    <Text>Last name: {this.state.user_data.last_name}</Text>
-                    <Text>Friends: {this.state.user_data.friend_count}</Text>
+                    <View style={{margin: 10}}>
+                <Text style={styles.userName}>{this.state.user_data.first_name} {this.state.user_data.last_name} </Text>
+                    <Text style={{fontSize: 18, marginLeft: 5}}>Friends: {this.state.user_data.friend_count}</Text>
+                    </View>
                     <PostsFeed listOfPosts={this.state.posts}/>
             </ScrollView>
         );
         }
     }
 }
+
+const styles = StyleSheet.create({
+    userName: {
+        fontSize: 22,
+        fontWeight: '200',
+        marginTop: 10,
+        marginBottom: 10,
+        borderWidth: 1,
+        borderRadius: 10,
+        padding: 10
+      },
+});
 
 export default FriendProfile;

@@ -119,43 +119,57 @@ static contextType = loginContext;
         );
         } else {
             return (
-                <ScrollView style={styles.container}>
+                <ScrollView>
                       <Image
                         source={{
                         uri: this.state.user_photo,
                         }}
                         style={{
                         width: 400,
-                        height: 300,
-                        borderWidth: 5 
+                        height: 400,
+                        borderWidth: 5,
+                        borderRadius: 200
                         }}
                     />
-                    <Text style={styles.userName}>First name: {this.state.user_data.first_name} </Text>
-                    <Text>Last name: {this.state.user_data.last_name}</Text>
-                    <Text>Friends: {this.state.user_data.friend_count}</Text>
-                    <Button title='Change profile photo' onPress={() => this.uploadProfilePicture()}/>
-                    <Button title='Edit profile' onPress={() => this.props.navigation.navigate('EditProfile')}/>
-                    <Button title='Friends' onPress={() => this.props.navigation.navigate('Friends')}/>
-                    
+                    <View style={styles.userDataContainer}>
+                    <Text style={styles.userName}>{this.state.user_data.first_name} {this.state.user_data.last_name}</Text>
+                    <Text style={styles.friendText}>Friends: {this.state.user_data.friend_count}</Text>
+                    </View>
+                    <View style={styles.editProfileButtonContainer}>
+                    <Button marginBottom={12} color='#B22222' title='Change profile photo' onPress={() => this.uploadProfilePicture()}/>
+                    </View>
+                    <View style={styles.editProfileButtonContainer}>
+                    <Button color='#B22222' title='Edit profile' onPress={() => this.props.navigation.navigate('EditProfile')}/>
+                    </View>
+                    <View style={styles.editProfileButtonContainer}>
+                    <Button color='#B22222' title='Friends' onPress={() => this.props.navigation.navigate('Friends')}/>
+                    </View>
                 </ScrollView>
             );
         }
     }
 }
 
-const styles = StyleSheet.create({
-    statusBar: {
-      backgroundColor: '#C2185B',
-      height: Constants.statusBarHeight
-    },
-    container: {
-      flex: 1
-    },
+  const styles = StyleSheet.create({
     userName: {
-        fontSize: 18,
-        fontWeight: 'bold',
+        fontSize: 22,
+        fontWeight: '200',
         marginTop: 10,
         marginBottom: 10,
+        borderWidth: 1,
+        borderRadius: 10,
+        padding: 10
       },
+      editProfileButtonContainer: {
+          color: '#B22222',
+          padding: 6
+      },
+      userDataContainer: {
+          margin: 10
+      },
+      friendText: {
+        fontSize: 18,
+        margin: 5
+      }
   });
 export default Profile;

@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View, Button, TextInput, FlatList, ActivityIndicator, Input } from 'react-native';
 import React, { Component } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { styles } from '../styles/style';
 
 const getData = async(done) => {
     try {
@@ -81,14 +82,16 @@ class EditProfile extends Component {
 
     render() {
         return(
-            <View>
-                <Text>First name: </Text>
-                <TextInput placeholder={this.state.data.first_name} value={this.state.first_name} onChangeText={value => this.setState({first_name: value})}></TextInput>
-                <Text>Last name:</Text>
-                <TextInput placeholder={this.state.data.last_name} value={this.state.last_name} onChangeText={value => this.setState({last_name: value})}/>
-                <Text>Email:</Text>
-                <TextInput placeholder={this.state.data.email} value={this.state.email} onChangeText={value => this.setState({email: value})}/>
-                <Button title='Save' onPress={() => this.updateUserInfo()}></Button>
+            <View style={styles.container}>
+                <Text style={styles.label}>First name: </Text>
+                <TextInput style={styles.inputField} placeholder={this.state.data.first_name} value={this.state.first_name} onChangeText={value => this.setState({first_name: value})}></TextInput>
+                <Text style={styles.label}>Last name:</Text>
+                <TextInput style={styles.inputField} placeholder={this.state.data.last_name} value={this.state.last_name} onChangeText={value => this.setState({last_name: value})}/>
+                <Text style={styles.label}>Email:</Text>
+                <TextInput style={styles.inputField} placeholder={this.state.data.email} value={this.state.email} onChangeText={value => this.setState({email: value})}/>
+                <View style={styles.buttonContainer}>
+                <Button color='#B22222' title='Save' onPress={() => this.updateUserInfo()}></Button>
+                </View>
             </View>
         );
     }

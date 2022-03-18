@@ -85,5 +85,21 @@ export const styles = StyleSheet.create({
         left: 60,
         right: 50
       },
+    likeButton: {
+        width: '15%',
+        alignItems: "center",
+        marginRight: 8,
+        marginTop: 5,
+        paddingTop: 3,
+        paddingBottom: 3,
+        backgroundColor: '#B22222',
+        borderRadius: 5,
     
+    },
+    label: {
+        fontSize: 20,
+        marginBottom: 5,
+        color: '#051d5f',
+        padding: 5
+    }
 });
