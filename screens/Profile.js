@@ -54,7 +54,7 @@ static contextType = loginContext;
             this.getUserDetails();
         
     }
-
+    
     requestCameraPermission = async () => {
         try {
           const granted = await PermissionsAndroid.request(
@@ -148,7 +148,7 @@ static contextType = loginContext;
                     <Button marginBottom={12} color='#B22222' title='Change profile photo' onPress={() => this.uploadProfilePicture()}/>
                     </View>
                     <View style={styles.editProfileButtonContainer}>
-                    <Button color='#B22222' title='Edit profile' onPress={() => this.props.navigation.navigate('EditProfile')}/>
+                    <Button color='#B22222' title='Edit profile' onPress={() => this.props.navigation.navigate('EditProfile', { onGoBack: () => this.getUserDetails()})}/>
                     </View>
                     <View style={styles.editProfileButtonContainer}>
                     <Button color='#B22222' title='Friends' onPress={() => this.props.navigation.navigate('Friends')}/>

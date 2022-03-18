@@ -3,15 +3,6 @@ import React, { Component } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { SearchBar } from 'react-native-elements';
 
-const getData = async (done) => {
-    try {
-        const jsonValue = await AsyncStorage.getItem('@spacebook_details')
-        const data = JSON.parse(jsonValue);
-        return done(data);
-    } catch (e) {
-        console.log(e);
-    }
-}
 
 class Search extends Component {
 

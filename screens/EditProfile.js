@@ -2,22 +2,15 @@ import { StyleSheet, Text, View, Button, TextInput, FlatList, ActivityIndicator,
 import React, { Component } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { styles } from '../styles/style';
+import { loginContext } from '../loginContext';
 
-const getData = async(done) => {
-    try {
-        const jsonValue = await AsyncStorage.getItem('@spacebook_details');    
-        const data = JSON.parse(jsonValue);
-        return done(data);
-    } catch (e) {
-        console.log(e);
-    }
-}
 
 class EditProfile extends Component {
+    static contextType = loginContext;
     constructor(props){
         super(props);
         this.state = {
-            login_data: {},
+       
             email: '',
             first_name: '',
             last_name: '',
@@ -27,19 +20,16 @@ class EditProfile extends Component {
     }
 
     componentDidMount() {
-        getData((data) => {
-            this.setState({
-                login_data: data
-            });
+        
             this.getUserData();
-        });
+        
     }
     getUserData = () => {
-        fetch('http://10.0.2.2:3333/api/1.0.0/user/' + this.state.login_data.id, {
+        fetch('http://10.0.2.2:3333/api/1.0.0/user/' + this.context.id, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                'X-Authorization': this.state.login_data.token
+                'X-Authorization': this.context.token
             }
         })
         .then((response) => response.json())
@@ -57,11 +47,11 @@ class EditProfile extends Component {
         })
     }
     updateUserInfo = () => {
-        fetch('http://10.0.2.2:3333/api/1.0.0/user/' + this.state.login_data.id, {
+        fetch('http://10.0.2.2:3333/api/1.0.0/user/' + this.context.id, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
-                'X-Authorization': this.state.login_data.token
+                'X-Authorization': this.context.token
             },
             body: JSON.stringify({
                 first_name: this.state.first_name,
@@ -69,7 +59,15 @@ class EditProfile extends Component {
                 email: this.state.email
             })
         })
-        .then((response) => response)
+        .then((response) => {
+            if(response.status == 200){
+                this.props.route.params.onGoBack();
+                this.props.navigation.goBack();
+            } else {
+                alert('Something went wrong. Try again');
+            }
+            
+        })
         .catch((error) => {
             console.log(error);
         })

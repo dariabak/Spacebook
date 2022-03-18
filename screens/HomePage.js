@@ -78,8 +78,13 @@ logout = () => {
             }
         })
         .then(() => {
+            const logout = {
+                isLoggedIn: false,
+                token: '',
+                id: 0
+              }
             clearAsyncStorage();
-            this.context.setAuth(false);
+            this.context.setAuth(logout);
         })
         .catch((error) => {
             console.log(error);

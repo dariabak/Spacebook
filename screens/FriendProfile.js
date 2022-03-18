@@ -84,7 +84,7 @@ class FriendProfile extends Component {
     
     }
     sendFriendRequest = () => {
-        fetch('http://10.0.2.2:3333/api/1.0.0/user/' + this.props.user.user_id + '/friends' , {
+        fetch('http://10.0.2.2:3333/api/1.0.0/user/' + this.props.route.params.friend.user_id + '/friends' , {
             method: 'POST',    
             headers: {
                     'X-Authorization': this.context.token

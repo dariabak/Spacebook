@@ -64,8 +64,6 @@ export const styles = StyleSheet.create({
         position: 'absolute',
         right: 5,
         top: 5,
-        marginRight: 5,
-        marginTop: 3,
         backgroundColor: '#B22222',
         borderRadius: 8,
         paddingLeft: 5,
