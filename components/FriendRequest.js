@@ -22,7 +22,11 @@ class FriendRequest extends Component {
                 'X-Authorization': this.context.token
             }
         })
-        .then((response) => console.log(response.status))
+        .then((response) => {
+            if(response.status == 200) {
+                this.props.update;
+            } 
+        })
         .catch((error) => {
             console.log(error);
         })
@@ -35,7 +39,11 @@ class FriendRequest extends Component {
                 'X-Authorization': this.context.token
             }
         })
-        .then((response) => console.log(response.status))
+        .then((response) => {
+            if(response.status == 200) {
+                this.props.update.updateRequests();
+            } 
+        })
         .catch((error) => {
             console.log(error);
         })
@@ -69,10 +77,10 @@ class FriendRequest extends Component {
             <Text style={{marginTop: 12, fontSize: 18, marginLeft: 5, marginRight: 15}}> {this.props.request.first_name} {this.props.request.last_name}</Text>
            
                 <View style={{position: 'absolute', right: 5, marginTop: 12, flexDirection: 'row-reverse'}}>
-                    <TouchableOpacity style={styles.button} onPress={() => this.declineFriendRequest}>
+                    <TouchableOpacity style={styles.button} onPress={() => this.declineFriendRequest()}>
                         <Text style={{color: '#ffffff', fontSize: 16, padding: 5}}>Decline</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.button} onPress={() => this.acceptFriendRequest}>
+                    <TouchableOpacity style={styles.button} onPress={() => this.acceptFriendRequest()}>
                         <Text style={{color: '#ffffff', fontSize: 16, padding: 5}}>Accept</Text>
                     </TouchableOpacity>
                     

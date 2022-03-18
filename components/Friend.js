@@ -1,4 +1,4 @@
-import { Image, Text, View, Button, TextInput, FlatList, ActivityIndicator, Input, requireNativeComponent } from 'react-native';
+import { Image, Text, View, Button, TouchableOpacity, FlatList, ActivityIndicator, Input, requireNativeComponent } from 'react-native';
 import React, { Component } from 'react';
 import * as FileSystem from 'expo-file-system';
 import { loginContext } from '../loginContext';
@@ -28,22 +28,31 @@ class Friend extends Component {
     }
     render() {
         return(
-            <View style={{margin: 10, justifyContent: 'center', alignItems: 'center'}}>
+            <View style={{flexDirection: 'row', padding:5, width: '100%'}}>
                 <Image
                         source={{
                         uri: this.state.friend_photo,
                         }}
                         style={{
-                        width: 100,
-                        height: 100,
+                        width: 70,
+                        height: 70,
                         borderWidth: 5,
-                        borderRadius: 10
-
+                        borderRadius: 5,
+                        margin: 5,
                         }}
                     />
-                <Text>{this.props.friend.user_givenname}</Text>
-                <Text>{this.props.friend.user_familyname}</Text>
-                <Button color='#B22222' title='See profile' onPress={() => this.props.navigation.navigate('FriendProfile', {friend: this.props.friend})}/>
+                <Text style={{marginTop: 25, fontSize: 16, marginLeft: 5, marginRight: 15}}>{this.props.friend.user_givenname} {this.props.friend.user_familyname}</Text>
+                <View style={{position: 'absolute', right: 5, marginTop: 25, flexDirection: 'row-reverse'}}>
+                <TouchableOpacity style={{backgroundColor:'#B22222', 
+                    margin: 5, 
+                    paddingHorizontal: 5,
+                    alignContent: 'center', 
+                    justifyContent: 'center', 
+                    borderRadius: 5}} 
+                    onPress={() => this.props.navigation.navigate('FriendProfile', {friend: this.props.friend})}>
+                        <Text style={{color: '#ffffff', fontSize: 16, padding: 5}}>See profile</Text>
+                    </TouchableOpacity>
+                    </View>
             </View>
         );
     }

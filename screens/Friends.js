@@ -1,6 +1,5 @@
-import { StyleSheet, Text, View, Button, TextInput, FlatList, ActivityIndicator, Input } from 'react-native';
+import { StyleSheet, Text, View, Button, ScrollView, FlatList, ActivityIndicator, Input } from 'react-native';
 import React, { Component } from 'react';
-import { ScrollView } from 'react-native-gesture-handler';
 import Friend from '../components/Friend';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { loginContext } from '../loginContext';
@@ -47,11 +46,15 @@ componentDidMount() {
             );
         } else {
         return(
+            <ScrollView>
+        
+           
             <View>
                 {this.state.listOfFriends.map(friend => 
                     <Friend navigation={this.props.navigation} key={friend.user_id} friend={friend}/>
                  )}
             </View>
+            </ScrollView>
         );
         }
     }

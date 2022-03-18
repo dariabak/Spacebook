@@ -1,7 +1,7 @@
 import 'react-native-gesture-handler';
-import React, { Component, useState}  from 'react';
+import React, { Component, useState } from 'react';
 import { StyleSheet, Text, View, Button, Image } from 'react-native';
-import { NavigationContainer} from '@react-navigation/native';
+import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Login from './screens/Login';
 import SignUp from './screens/SignUp';
@@ -27,10 +27,10 @@ class App extends Component {
       setAuth: this.setAuth,
       token: '',
       id: 0
- 
+
     };
   }
-  setAuth = (value) =>{
+  setAuth = (value) => {
     this.setState({
       isLoggedIn: value.isLoggedIn,
       token: value.token,
@@ -39,7 +39,7 @@ class App extends Component {
   }
 
   render() {
-    
+
     const value = {
       isLoggedIn: this.state.isLoggedIn,
       setAuth: this.state.setAuth,
@@ -53,48 +53,48 @@ class App extends Component {
     }
     return (
       <loginContext.Provider value={value}>
-      <NavigationContainer>
-         
-          { this.state.isLoggedIn ? (
-            <Stack.Navigator>    
-          <Stack.Screen name="HomeNavigator" component={HomeNavigator} 
-            options={{
-              headerShown: false
-            }}/>
-               
-              <Stack.Screen name='Friends' component={Friends}/>
-              <Stack.Screen name='EditProfile' component={EditProfile}/>
-              <Stack.Screen name='FriendProfile' component={FriendProfile}/>
-              <Stack.Screen name='FriendSearch' component={FriendSearch}/>
-            </Stack.Navigator>) 
-          : (
-          <Stack.Navigator screenOptions={{
-            headerLeft: () => (
-              <View>
-              <Image source={require('./assets/logo.png')}
-                  style={{
-                      width: 60,
-                      height: 65
-                  }}/>
+        <NavigationContainer>
+
+          {this.state.isLoggedIn ? (
+            <Stack.Navigator>
+              <Stack.Screen name="HomeNavigator" component={HomeNavigator}
+                options={{
+                  headerShown: false
+                }} />
+
+              <Stack.Screen name='Friends' component={Friends} />
+              <Stack.Screen name='EditProfile' component={EditProfile} />
+              <Stack.Screen name='FriendProfile' component={FriendProfile} />
+              <Stack.Screen name='FriendSearch' component={FriendSearch} />
+            </Stack.Navigator>)
+            : (
+              <Stack.Navigator screenOptions={{
+                headerLeft: () => (
+                  <View>
+                    <Image source={require('./assets/logo.png')}
+                      style={{
+                        width: 60,
+                        height: 65
+                      }} />
                   </View>
-            ),
-            title: 'Spacebook'
-          }}>
-           
-          <Stack.Screen name="Login" component={Login} options={{ 
-            headerRight: () => (
-              <View></View>
-            )
-          }}/>   
-          <Stack.Screen name="SignUp" component={SignUp}/>   
-          </Stack.Navigator>)      
+                ),
+                title: 'Spacebook'
+              }}>
+
+                <Stack.Screen name="Login" component={Login} options={{
+                  headerRight: () => (
+                    <View></View>
+                  )
+                }} />
+                <Stack.Screen name="SignUp" component={SignUp} />
+              </Stack.Navigator>)
           }
-          
-      </NavigationContainer>
+
+        </NavigationContainer>
       </loginContext.Provider>
     );
 
+  }
 }
-}
- export default App;
+export default App;
 

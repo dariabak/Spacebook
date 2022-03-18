@@ -70,7 +70,7 @@ class FriendRequests extends Component {
             {this.state.friendRequests.map(request => {
                return( 
                <View>     
-                    <FriendRequest key={request.user_id} request={request}/>
+                    <FriendRequest key={request.user_id} request={request} update={{updateRequests: () => this.getFriendsRequests()}}/>
                     <View
                         style={{
                         height: 1,
